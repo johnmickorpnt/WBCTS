@@ -1,6 +1,6 @@
 <?php
 session_start();
-	
+	//ako ay isang comment
 	include("connection.php");
 	include("function.php");
 
