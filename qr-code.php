@@ -16,6 +16,10 @@
     include("header.php");
 	?>
 
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<center><p>
+		This is for the QR CODE TRACKER
+	</p></center>
 
 
 
