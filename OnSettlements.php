@@ -3,14 +3,13 @@
 <head>
   <title>Blotter Website | Settlements</title>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
   <link rel="stylesheet" href="css/style1.css">
   
 
 </head>
 
 <header>
+  
     <a href="#" class="logo"><img src="image/wbctsLogo.png"></a>
       <input type="checkbox" id="menu-bar">
       <label for="menu-bar">Menu</label>
@@ -31,6 +30,9 @@
 </header>
 
 <body>
+<?php
+    include("header.php");
+  ?>
   <br><br><br><br><br><br>
 <table id="example" class="table table-striped" style="width:100%">
         <thead>
@@ -150,6 +152,8 @@
             </tr>
 
     </table>
-
+  <?php
+    include("footer.php");
+  ?>
 </body>
 </html>
