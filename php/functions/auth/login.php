@@ -41,6 +41,7 @@ if (!isset($_POST['email']) || !isset($_POST['pass'])) {
         exit();
     } else {
         array_push($_SESSION["errors"], "Invalid Email/Password");
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit();
     }
 }
