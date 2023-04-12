@@ -37,22 +37,19 @@
 			<hr>
 		</center>
 
-		<form name="LoginForm" method="post" onsubmit="return ValidateForms()">
+		<form name="LoginForm" method="post" action="php/functions/auth/login.php">
 			<div class="field">
 
-				<label for="uname">Username:</label>
-				<input type="text" id="uname" name="Username" placeholder="Enter Username">
+				<label for="email">Email:</label>
+				<input type="text" id="email" name="email" placeholder="Enter Email" required>
 			</div>
-
 			<div class="field">
-
-				<label for="pword">Password:</label>
-				<input type="text" id="pword" name="Password" placeholder="Enter Password">
-
+				<label for="pass">Password:</label>
+				<input type="password" id="pass" name="pass" placeholder="Enter Password" required>
 				<hr>
 				<p>Don't have an account yet? <a href="registration.php">Register here</a>.</p>
 				<div class="loginbtn">
-					<button type="onsubmit" onclick="ValidateForms()" />
+					<button type="onsubmit"/>
 					<a href="index.php">LOGIN</a></button>
 				</div>
 		</form>

@@ -1,40 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <title>Blotter Website | Settlements</title>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="css/style1.css">
-  
+    <title>Blotter Website | Settlements</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style1.css">
+
 
 </head>
 
 <header>
 
     <a href="#" class="logo"><img src="image/wbctsLogo.png"></a>
-      <input type="checkbox" id="menu-bar">
-      <label for="menu-bar">Menu</label>
-      <nav class="navbar">
+    <input type="checkbox" id="menu-bar">
+    <label for="menu-bar">Menu</label>
+    <nav class="navbar">
         <ul>
-          <li><a href="index.php">Home</a></li>
-          <li><a href="OnSettlements.php">Settlements</a></li>
-          <li><a href="#">Blotter Records</a></li>
-          <li><a href="#">QR Code Tracking</a></li>
-          <li><a href="#">Profile</a>
-            <ul>
-              <li><a href="#">Personal Information</li></a>
-              <li><a href="logout.php">Log out</li></a>
-            </ul>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="OnSettlements.php">Settlements</a></li>
+            <li><a href="#">Blotter Records</a></li>
+            <li><a href="#">QR Code Tracking</a></li>
+            <li><a href="#">Profile</a>
+                <ul>
+                    <li><a href="#">Personal Information</li></a>
+                    <li><a href="logout.php">Log out</li></a>
+                </ul>
         </ul>
 
-      </nav>
+    </nav>
 </header>
 
 <body>
-<?php
+    <?php
     include("header.php");
-  ?>
-  <br><br><br><br><br><br>
-<table id="example" class="table table-striped" style="width:100%">
+    ?>
+    <br><br><br><br><br><br>
+    <table id="example" class="table table-striped" style="width:100%">
         <thead>
             <tr>
                 <th>Name</th>
@@ -42,7 +43,7 @@
                 <th>Office</th>
                 <th>Age</th>
                 <th>Start date</th>
-            
+
             </tr>
         </thead>
         <tbody>
@@ -52,7 +53,7 @@
                 <td>Antipolo</td>
                 <td>61</td>
                 <td>2011-04-25</td>
-  
+
             </tr>
             <tr>
                 <td>Garrett Winters</td>
@@ -60,7 +61,7 @@
                 <td>Antipolo</td>
                 <td>63</td>
                 <td>2011-07-25</td>
-  
+
             </tr>
             <tr>
                 <td>Ashton Cox</td>
@@ -68,7 +69,7 @@
                 <td>Antipolo</td>
                 <td>66</td>
                 <td>2009-01-12</td>
- 
+
             </tr>
             <tr>
                 <td>Cedric Kelly</td>
@@ -152,8 +153,9 @@
             </tr>
 
     </table>
-  <?php
+    <?php
     include("footer.php");
-  ?>
+    ?>
 </body>
+
 </html>

@@ -2,7 +2,7 @@
 session_start();
 
 if (isset($_SESSION['email'])) {
-	echo "Welcome bitch" . $_SESSION["email"];
+	echo "Welcome bitch" . $_SESSION["user_id"];
 } else {
 	header("");
 }
