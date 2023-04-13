@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,33 +12,11 @@
 
 </head>
 
-<header>
-
-    <a href="#" class="logo"><img src="image/wbctsLogo.png"></a>
-    <input type="checkbox" id="menu-bar">
-    <label for="menu-bar">Menu</label>
-    <nav class="navbar">
-        <ul>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="OnSettlements.php">Settlements</a></li>
-            <li><a href="#">Blotter Records</a></li>
-            <li><a href="#">QR Code Tracking</a></li>
-            <li><a href="#">Profile</a>
-                <ul>
-                    <li><a href="#">Personal Information</li></a>
-                    <li><a href="logout.php">Log out</li></a>
-                </ul>
-        </ul>
-
-    </nav>
-</header>
-
 <body>
     <?php
     include("header.php");
     ?>
-    <br><br><br><br><br><br>
-    <table id="example" class="table table-striped" style="width:100%">
+    <table id="example" class="table table-striped" style="width:100%; margin-top:10rem; text-align:center">
         <thead>
             <tr>
                 <th>Name</th>

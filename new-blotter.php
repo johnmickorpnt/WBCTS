@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION["id"])) header("Location: login.php");
+if (!isset($_SESSION["id"])) header("Location: login.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -50,8 +50,8 @@ if(!isset($_SESSION["id"])) header("Location: login.php");
                 <textarea type="text" placeholder="Enter the Location of the Incident" name="incident_location" id="incident_location" required style="width:100%"></textarea>
             </div>
             <div class="field">
-                <label for="incident_details"><b>Incident Location:</b></label><br>
-                <textarea type="text" placeholder="Enter Details of the incident" name="incident_details" id="incident_details" required style="width:100%"></textarea>
+                <label for="incident_details"><b>Incident Details:</b></label><br>
+                <textarea type="text" placeholder="Enter Details of the Details" name="incident_details" id="incident_details" required style="width:100%"></textarea>
             </div>
             <div class="field" style="display: flex; flex-direction: column;">
                 <label for="incident_type">Incident Type:</label>
@@ -62,7 +62,7 @@ if(!isset($_SESSION["id"])) header("Location: login.php");
                     <option value="Staffa">Staffa</option>
                 </select>
             </div>
-            <input type="hidden" value="<?php echo $_SESSION['id'];?>" id="complainant_id" name="complainant_id">
+            <input type="hidden" value="<?php echo $_SESSION['id']; ?>" id="complainant_id" name="complainant_id">
             <div class="field">
                 <label for="remarks">Remarks:</label>
                 <input type="text" id="remarks" name="remarks" placeholder="Enter Remarks" required>

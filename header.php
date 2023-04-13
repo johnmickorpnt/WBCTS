@@ -19,7 +19,6 @@
 						<li><a href="blotter-records.php">View Records</li></a>
 					</ul>
 				</li>
-				<!-- <li><a href="blotter-records.php">Blotter Records</a></li> -->
 				<li><a href="qr-code.php">QR Code Tracking</a></li>
 				<?php
 				echo isset($_SESSION["id"]) ? <<<CONTENT
@@ -28,20 +27,12 @@
 						<li><a href="php/functions/auth/logout.php">Logout</li></a>
 					</ul>
 				</li>
-				CONTENT : 
-				<<<CONTENT
+				CONTENT :
+					<<<CONTENT
 					<li><a href="login.php">Login</a></li>
 					<li><a href="registration.php">Register</a></li>
 				CONTENT;
 				?>
-				
-
-				<!-- <li><a href="profile.php">Profile</a>
-						<ul>
-							<li><a href="#">Personal Information</li></a>
-							<li><a href="logout.php">Log out</li></a>
-						</ul>
-					</li> -->
 			</ul>
 		</nav>
 	</header>
