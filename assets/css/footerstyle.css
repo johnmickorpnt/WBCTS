@@ -14,8 +14,7 @@
   text-align: left;
   padding: 35px;
   padding-bottom: 3%;
-  position: fixed;
-   bottom: 0;
+  bottom: 0;
 }
 
 .footer-distributed .footer-left p {
@@ -71,21 +70,28 @@
   text-align: center;
   line-height: 35px;
   margin-left: 3px;
-  transition:all .25s;
+  transition: all .25s;
 }
 
-.footer-distributed .footer-right a:hover{transform:scale(1.1); -webkit-transform:scale(1.1);}
+.footer-distributed .footer-right a:hover {
+  transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+}
 
-.footer-distributed p.footer-links a:hover{text-decoration:underline;}
+.footer-distributed p.footer-links a:hover {
+  text-decoration: underline;
+}
 
 @media (max-width: 600px) {
   .footer-distributed .footer-left, .footer-distributed .footer-right {
     text-align: center;
   }
+
   .footer-distributed .footer-right {
     float: none;
     margin: 0 auto 20px;
   }
+
   .footer-distributed .footer-left p.footer-links {
     line-height: 1.8;
   }

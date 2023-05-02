@@ -1,22 +1,9 @@
 <?php
-session_start();
-?>
-<!DOCTYPE html>
-<html lang="en">
+require("../templates/template-functions.php");
 
-<head>
-    <title>Blotter Website | Settlements</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="css/style1.css">
-
-
-</head>
-
-<body>
-    <?php
-    include("header.php");
-    ?>
-    <table id="example" class="table table-striped" style="width:100%; margin-top:10rem; text-align:center">
+$title = "On Settlements";
+$content = <<<CONTENT
+<table id="example" class="table table-striped" style="width:100%; margin-top:10rem; text-align:center">
         <thead>
             <tr>
                 <th>Name</th>
@@ -24,7 +11,6 @@ session_start();
                 <th>Office</th>
                 <th>Age</th>
                 <th>Start date</th>
-
             </tr>
         </thead>
         <tbody>
@@ -34,7 +20,6 @@ session_start();
                 <td>Antipolo</td>
                 <td>61</td>
                 <td>2011-04-25</td>
-
             </tr>
             <tr>
                 <td>Garrett Winters</td>
@@ -42,7 +27,6 @@ session_start();
                 <td>Antipolo</td>
                 <td>63</td>
                 <td>2011-07-25</td>
-
             </tr>
             <tr>
                 <td>Ashton Cox</td>
@@ -50,7 +34,6 @@ session_start();
                 <td>Antipolo</td>
                 <td>66</td>
                 <td>2009-01-12</td>
-
             </tr>
             <tr>
                 <td>Cedric Kelly</td>
@@ -58,7 +41,6 @@ session_start();
                 <td>Antipolo</td>
                 <td>22</td>
                 <td>2012-03-29</td>
-
             </tr>
             <tr>
                 <td>Airi Satou</td>
@@ -66,7 +48,6 @@ session_start();
                 <td>Antipolo</td>
                 <td>33</td>
                 <td>2008-11-28</td>
-
             </tr>
             <tr>
                 <td>Brielle Williamson</td>
@@ -74,7 +55,6 @@ session_start();
                 <td>Antipolo</td>
                 <td>61</td>
                 <td>2012-12-02</td>
-
             </tr>
             <tr>
                 <td>Herrod Chandler</td>
@@ -82,7 +62,6 @@ session_start();
                 <td>Antipolo</td>
                 <td>59</td>
                 <td>2012-08-06</td>
-
             </tr>
             <tr>
                 <td>Rhona Davidson</td>
@@ -90,7 +69,6 @@ session_start();
                 <td>Antipolo</td>
                 <td>55</td>
                 <td>2010-10-14</td>
-
             </tr>
             <tr>
                 <td>Colleen Hurst</td>
@@ -98,7 +76,6 @@ session_start();
                 <td>Antipolo</td>
                 <td>39</td>
                 <td>2009-09-15</td>
-
             </tr>
             <tr>
                 <td>Sonya Frost</td>
@@ -106,7 +83,6 @@ session_start();
                 <td>Antipolo</td>
                 <td>23</td>
                 <td>2008-12-13</td>
-
             </tr>
             <tr>
                 <td>Jena Gaines</td>
@@ -114,7 +90,6 @@ session_start();
                 <td>Antipolo</td>
                 <td>30</td>
                 <td>2008-12-19</td>
-
             </tr>
             <tr>
                 <td>Quinn Flynn</td>
@@ -122,7 +97,6 @@ session_start();
                 <td>Antipolo</td>
                 <td>22</td>
                 <td>2013-03-03</td>
-
             </tr>
             <tr>
                 <td>Charde Marshall</td>
@@ -130,13 +104,11 @@ session_start();
                 <td>Antipolo</td>
                 <td>36</td>
                 <td>2008-10-16</td>
-
             </tr>
-
     </table>
-    <?php
-    include("footer.php");
-    ?>
-</body>
+CONTENT;
+?>
 
-</html>
+<?php include '../templates/default.php'; ?>
+
+
