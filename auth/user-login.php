@@ -1,5 +1,5 @@
 <?php
-require("../../templates/template-functions.php");
+require("../templates/template-functions.php");
 
 
 $title = "Login";
@@ -29,7 +29,7 @@ $content = <<<CONTENT
 			<label for="pass">Password:</label>
 			<input type="password" id="pass" name="pass" placeholder="Enter Password" required>
 			<hr>
-			<p>Don't have an account yet? <a href="user-registration.php">Register here</a>.</p>
+			<p>Don't have an account yet? <a href="user-registration">Register here</a>.</p>
 			<div class="loginbtn">
 				<button type="onsubmit" />
 				<a href="index.php">LOGIN</a></button>
@@ -37,4 +37,4 @@ $content = <<<CONTENT
 	</form>
 CONTENT;
 ?>
-<?php include '../../templates/auth.php'; ?>
+<?php include '../templates/auth.php'; ?>

@@ -14,7 +14,7 @@
   text-align: left;
   padding: 35px;
   padding-bottom: 3%;
-  bottom: 0;
+  position: relative;
 }
 
 .footer-distributed .footer-left p {

@@ -1,5 +1,5 @@
 <?php
-require("../templates/template-functions.php");
+require("templates/template-functions.php");
 
 
 $title = "Blotter Website";
@@ -15,4 +15,4 @@ $content = <<<CONTENT
 	</div>
 CONTENT;
 ?>
-<?php include '../templates/default.php'; ?>
+<?php include 'templates/default.php'; ?>

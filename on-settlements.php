@@ -1,5 +1,5 @@
 <?php
-require("../templates/template-functions.php");
+require("templates/template-functions.php");
 
 $title = "On Settlements";
 $content = <<<CONTENT
@@ -109,6 +109,6 @@ $content = <<<CONTENT
 CONTENT;
 ?>
 
-<?php include '../templates/default.php'; ?>
+<?php include 'templates/default.php'; ?>
 
 

@@ -1,5 +1,5 @@
 <?php
-require("../templates/template-functions.php");
+require("templates/template-functions.php");
 
 
 $title = "QR Tracking";
@@ -13,4 +13,4 @@ $content = <<<CONTENT
 	</center>
 CONTENT;
 ?>
-<?php include '../templates/default.php'; ?>
+<?php include 'templates/default.php'; ?>

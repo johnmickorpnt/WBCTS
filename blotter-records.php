@@ -1,8 +1,8 @@
 <?php
-require("../templates/template-functions.php");
+require("templates/template-functions.php");
 
-require_once "../php/config/Database.php";
-require_once "../php/models/Blotter.php";
+require_once "php/config/Database.php";
+require_once "php/models/Blotter.php";
 $database = new Database();
 $db = $database->connect();
 $blotter = new Blotter($db);
@@ -62,4 +62,4 @@ $content = <<<CONTENT
 		</table>
 CONTENT;
 ?>
-<?php include '../templates/default.php'; ?>
+<?php include 'templates/default.php'; ?>

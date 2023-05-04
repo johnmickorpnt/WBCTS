@@ -1,5 +1,5 @@
 <?php
-require("../../templates/template-functions.php");
+require("../templates/template-functions.php");
 
 
 $title = "Registration";
@@ -54,7 +54,7 @@ $content = <<<CONTENT
     </div>
     {$errors}
     <hr>
-    <p>Already have an account? <a href="user-login.php">Sign in here</a>.</p>
+    <p>Already have an account? <a href="user-login">Sign in here</a>.</p>
     <div class="registbtn">
       <button type="submit" onclick="ValidateForms()" />
       <span>Register</span>
@@ -78,4 +78,4 @@ $content = <<<CONTENT
   </script>
 CONTENT;
 ?>
-<?php include '../../templates/auth.php'; ?>
+<?php include '../templates/auth.php'; ?>

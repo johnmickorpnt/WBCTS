@@ -6,11 +6,11 @@
 	</div>
 	<div class="footer-left">
 		<p class="footer-links">
-			<a class="link-1" href="index.php">Home</a>
-			<a href="OnSettlements.php">Settlements</a>
-			<a href="blotter-records.php">Blotter Records</a>
-			<a href="qr-code.php">QR Code Tracking</a>
-			<a href="profile.php">Profile</a>
+			<a class="link-1" href="index">Home</a>
+			<a href="OnSettlements">Settlements</a>
+			<a href="blotter-records">Blotter Records</a>
+			<a href="qr-code">QR Code Tracking</a>
+			<a href="profile">Profile</a>
 		</p>
 		<p>Blotter Website 2023</p>
 	</div>

@@ -1,6 +1,6 @@
 <?php
-require("../templates/template-functions.php");
-if (!isset($_SESSION["id"])) header("Location: auth/user-login.php");
+require("templates/template-functions.php");
+if (!isset($_SESSION["id"])) header("Location: auth/user-login");
 
 $title = "Blotter Website";
 $errors = "";
@@ -14,7 +14,7 @@ if (isset($_SESSION["errors"])) {
 }
 
 $content = <<<CONTENT
-<form name="RegistrationForm" method="post" action="../php/functions/blotter/new.php">
+<form name="RegistrationForm" method="post" action="php/functions/blotter/new.php">
     <div style="display: flex; gap:1rem; width:100%">
         <div class="field" style="width: 50%;">
             <label for="respondent_name"><b>Respondent Full Name:</b></label><br>
@@ -58,5 +58,5 @@ $content = <<<CONTENT
 </form>
 CONTENT;
 ?>
-<?php include '../templates/auth.php'; ?>
+<?php include 'templates/auth.php'; ?>
 
