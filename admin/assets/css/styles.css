@@ -3,5 +3,99 @@
     padding: 0;
     outline: none;
     box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
 }
 
+body, html {
+    height: 100%;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+}
+
+.nav-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background-color: #577D86;
+    overflow: hidden;
+    z-index: 1;
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav li {
+    margin-top: 0.25rem;
+}
+
+nav li, nav .separator {
+    padding: 1rem 5rem 1rem 1rem;
+}
+
+nav .separator {
+    margin-top: 0.75rem;
+}
+
+nav a {
+    text-decoration: none;
+    display: grid;
+    grid-template-columns: 0.5fr 1fr;
+    align-items: center;
+}
+
+nav .separator span, nav a {
+    color: white;
+    font-size: 14px;
+}
+
+nav .separator span {
+    text-transform: uppercase;
+    font-size: 12px !important;
+    font-weight: bold;
+    cursor: default;
+}
+
+nav li.active {
+    background-color: #569DAA;
+}
+
+nav li:not(.separator):hover {
+    background-color: #61b5c4;
+}
+
+.dashboard-section {
+    padding: 0.75rem;
+}
+
+.tbl {
+    width: 100%;
+    padding: 1rem;
+}
+
+.tbl tr:nth-child(even), .tbl tr:hover {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+.tbl th {
+    background-color: #333;
+    color: #fff;
+}
+
+.tbl th {
+    text-transform: capitalize;
+}
+
+.tbl td, th {
+    padding: 1rem;
+    text-align: center;
+}

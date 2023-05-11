@@ -1,0 +1,205 @@
+<?php
+class Settlements
+{
+    private $conn;
+    private $table = "settlements";
+    private $id, $blotter_id, $resolution, $settlement_details, $settled_by, $remarks,
+        $date_settled, $updated_at, $columns;
+
+    public function __construct($db)
+    {
+        $this->conn = $db;
+    }
+
+    public function read()
+    {
+        $q = "SELECT * FROM {$this->table};";
+        $stmt = $this->conn->prepare($q);
+        $stmt->execute();
+        $data = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            array_push($data, $row);
+        }
+        return $data;
+    }
+
+    /**
+     * Get the value of updated_at
+     */
+    public function getUpdated_at()
+    {
+        return $this->updated_at;
+    }
+
+    /**
+     * Set the value of updated_at
+     *
+     * @return  self
+     */
+    public function setUpdated_at($updated_at)
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of date_settled
+     */
+    public function getDate_settled()
+    {
+        return $this->date_settled;
+    }
+
+    /**
+     * Set the value of date_settled
+     *
+     * @return  self
+     */
+    public function setDate_settled($date_settled)
+    {
+        $this->date_settled = $date_settled;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of remarks
+     */
+    public function getRemarks()
+    {
+        return $this->remarks;
+    }
+
+    /**
+     * Set the value of remarks
+     *
+     * @return  self
+     */
+    public function setRemarks($remarks)
+    {
+        $this->remarks = $remarks;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of settled_by
+     */
+    public function getSettled_by()
+    {
+        return $this->settled_by;
+    }
+
+    /**
+     * Set the value of settled_by
+     *
+     * @return  self
+     */
+    public function setSettled_by($settled_by)
+    {
+        $this->settled_by = $settled_by;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of settlement_details
+     */
+    public function getSettlement_details()
+    {
+        return $this->settlement_details;
+    }
+
+    /**
+     * Set the value of settlement_details
+     *
+     * @return  self
+     */
+    public function setSettlement_details($settlement_details)
+    {
+        $this->settlement_details = $settlement_details;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of resolution
+     */
+    public function getResolution()
+    {
+        return $this->resolution;
+    }
+
+    /**
+     * Set the value of resolution
+     *
+     * @return  self
+     */
+    public function setResolution($resolution)
+    {
+        $this->resolution = $resolution;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of blotter_id
+     */
+    public function getBlotter_id()
+    {
+        return $this->blotter_id;
+    }
+
+    /**
+     * Set the value of blotter_id
+     *
+     * @return  self
+     */
+    public function setBlotter_id($blotter_id)
+    {
+        $this->blotter_id = $blotter_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of columns
+     */
+    public function getColumns()
+    {
+        return $this->columns;
+    }
+
+    /**
+     * Set the value of columns
+     *
+     * @return  self
+     */
+    public function setColumns($columns)
+    {
+        $this->columns = $columns;
+
+        return $this;
+    }
+}
