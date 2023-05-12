@@ -13,8 +13,8 @@ class Blotters
 
     public function read()
     {
-        $q = !isset($this->columns) ? "SELECT * FROM {$this->table};" : 
-        "SELECT {$this->format_columns()} FROM {$this->table};";
+        $q = !isset($this->columns) ? "SELECT * FROM {$this->table};" :
+            "SELECT {$this->format_columns()} FROM {$this->table};";
         $stmt = $this->conn->prepare($q);
         $stmt->execute();
         $data = array();
