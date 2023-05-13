@@ -2,6 +2,7 @@
 class Table
 {
     private $tbl, $header, $content, $id, $styles, $attributes, $columns;
+    
     public function __construct($tbl)
     {
         $this->tbl = $tbl;
@@ -170,7 +171,7 @@ class Table
 
     /**
      * Get the value of columns
-     */ 
+     */
     public function getColumns()
     {
         return $this->columns;
@@ -180,7 +181,7 @@ class Table
      * Set the value of columns
      *
      * @return  self
-     */ 
+     */
     public function setColumns($columns)
     {
         $this->columns = $columns;

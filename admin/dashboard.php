@@ -19,6 +19,7 @@ $blotters = $blotterObj->read();
 
 $settlementTable = new Table($settlements);
 $blottersTable = new Table($blotters);
+
 $content = <<<CONTENT
 	<section class="dashboard-section">
 		<h4>Latest Settlements</h4>

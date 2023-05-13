@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2023 at 10:07 PM
+-- Generation Time: May 13, 2023 at 06:44 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -20,6 +20,55 @@ SET time_zone = "+00:00";
 --
 -- Database: `wbcts`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_roles`
+--
+
+CREATE TABLE `admin_roles` (
+  `id` int(11) NOT NULL,
+  `role` varchar(255) NOT NULL,
+  `permission_create` tinyint(1) NOT NULL DEFAULT 0,
+  `permission_read` tinyint(1) NOT NULL DEFAULT 1,
+  `permission_write` tinyint(1) NOT NULL DEFAULT 0,
+  `permission_update` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `admin_roles`
+--
+
+INSERT INTO `admin_roles` (`id`, `role`, `permission_create`, `permission_read`, `permission_write`, `permission_update`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 1, 1, 1, 1, '2023-05-12 13:03:20', '2023-05-12 13:03:20'),
+(2, 'staff', 0, 1, 1, 1, '2023-05-12 13:03:42', '2023-05-12 13:03:42');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_users`
+--
+
+CREATE TABLE `admin_users` (
+  `id` int(11) NOT NULL,
+  `firstname_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `role` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL DEFAULT current_timestamp(),
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `admin_users`
+--
+
+INSERT INTO `admin_users` (`id`, `firstname_name`, `last_name`, `role`, `username`, `password`, `created_at`, `updated_at`) VALUES
+(1, 'john', 'doe', 1, 'admin', 'admin', '2023-05-12 14:06:23', '2023-05-12 14:06:23');
 
 -- --------------------------------------------------------
 
@@ -66,6 +115,14 @@ CREATE TABLE `settlements` (
   `updated_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `settlements`
+--
+
+INSERT INTO `settlements` (`id`, `blotter_id`, `resolution`, `settlement_details`, `settled_by`, `remarks`, `date_settled`, `updated_at`) VALUES
+(1, 1, 'yes', 'yeye', '', '', '2023-05-10 15:59:16', '2023-05-10 15:59:16'),
+(2, 3, 'gsa', 'ha', 'hsa', 'hsa', '2023-05-10 15:59:16', '2023-05-10 15:59:16');
+
 -- --------------------------------------------------------
 
 --
@@ -89,11 +146,25 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `contact_number`, `address`, `password`, `created_at`, `updated`) VALUES
-(17, 'JOhn Micko', 'Rapanot', 'johnmickooo28@gmail.com', '09194282431', '17c Daffodil St. Grandvalley Phase 3, Barangay Mahabang Parang Angono Rizal', '$2y$10$z/swtY3bczDKsUXfQ/AxAuNoE325bMehTicavWINaRzL40DS5QZXm', '2023-04-13 02:23:26', '2023-04-13 02:23:26');
+(17, 'JOhn Micko', 'Rapanot', 'johnmickooo28@gmail.com', '09194282431', '17c Daffodil St. Grandvalley Phase 3, Barangay Mahabang Parang Angono Rizal', '$2y$10$z/swtY3bczDKsUXfQ/AxAuNoE325bMehTicavWINaRzL40DS5QZXm', '2023-04-13 02:23:26', '2023-04-13 02:23:26'),
+(18, 'JOhn Micko', 'Rapanot', 'johnmickorapanot@yahoo.com', '09194282431', '17c Daffodil St. Grandvalley Phase 3, Barangay Mahabang Parang Angono Rizal', '$2y$10$fnkk.ufQoes1AHX9RWqbPuaNtVKG8LWq.EZin0aS0GRcChNJuVNyK', '2023-04-13 10:57:35', '2023-04-13 10:57:35');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin_roles`
+--
+ALTER TABLE `admin_roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `admin_users`
+--
+ALTER TABLE `admin_users`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_User_roles` (`role`);
 
 --
 -- Indexes for table `blotter_records`
@@ -101,6 +172,13 @@ INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `contact_number`, `
 ALTER TABLE `blotter_records`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_customer_id` (`complainant_id`);
+
+--
+-- Indexes for table `settlements`
+--
+ALTER TABLE `settlements`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_blotter` (`blotter_id`);
 
 --
 -- Indexes for table `users`
@@ -114,20 +192,45 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `admin_roles`
+--
+ALTER TABLE `admin_roles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `admin_users`
+--
+ALTER TABLE `admin_users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `blotter_records`
 --
 ALTER TABLE `blotter_records`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `settlements`
+--
+ALTER TABLE `settlements`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `admin_users`
+--
+ALTER TABLE `admin_users`
+  ADD CONSTRAINT `FK_User_roles` FOREIGN KEY (`role`) REFERENCES `admin_roles` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_roles` FOREIGN KEY (`role`) REFERENCES `admin_roles` (`id`);
 
 --
 -- Constraints for table `blotter_records`
@@ -135,6 +238,12 @@ ALTER TABLE `users`
 ALTER TABLE `blotter_records`
   ADD CONSTRAINT `blotter_records_ibfk_1` FOREIGN KEY (`complainant_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `fk_customer_id` FOREIGN KEY (`complainant_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `settlements`
+--
+ALTER TABLE `settlements`
+  ADD CONSTRAINT `FK_blotter` FOREIGN KEY (`blotter_id`) REFERENCES `blotter_records` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
