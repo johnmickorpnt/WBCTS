@@ -20,7 +20,7 @@ $content = <<<CONTENT
 		<hr>
 	</center>
 
-	<form name="LoginForm" method="post" action="php/functions/auth/login.php">
+	<form name="LoginForm" method="post" action="../php/functions/auth/login.php">
 		<div class="field">
 			<label for="email">Email:</label>
 			<input type="text" id="email" name="email" placeholder="Enter Email" required>

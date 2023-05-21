@@ -4,6 +4,13 @@ header('Content-Type: application/json; charset=utf-8');
 require_once "../../config/Database.php";
 require_once "../../models/User.php";
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../../PHPMailer/src/Exception.php';
+require '../../PHPMailer/src/PHPMailer.php';
+require '../../PHPMailer/src/SMTP.php';
+
 $valid = array();
 $_SESSION["msg"] = array();
 $_SESSION["errors"] = array();
@@ -84,8 +91,41 @@ $user->setPass(password_hash($pass, PASSWORD_DEFAULT));
 
 $result = $user->save();
 
-if($result) {
+if ($result) {
+    $mail = new PHPMailer(true);
+    $mail->isSMTP(); // Set mailer to use SMTP
+    $mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
+    $mail->SMTPAuth = true; // Enable SMTP authentication
+
+
+    $mail->Username = 'jacobmartindummy@gmail.com';
+    $mail->Password = 'topldwzedgeifuge';
+    $mail->Port = 587;
+    $mail->SMTPSecure = 'tls';
+
+    $mail->setFrom('jacobmartindummy@gmail.com');
+    $mail->addAddress($email);
+    $mail->isHTML(true);
+    $mail->Subject = "Hubz Bistro Account Creation";
+
+
+
+    $mail->Body = <<<MSG
+        <h1>Welcome to Blotter MS!</h1>
+        <p>Thank you for joining us. We are excited to have you on board.</p>
+        <p>Blotter MS is a powerful system that empowers you to create blotters, manage settlements, and utilize QR code tracking.</p>
+        <p>With Blotter MS, you can easily create and manage blotters, record settlements, and track cases using QR codes for efficient and streamlined processes.</p>
+        <p>Explore the features of Blotter MS and experience a new level of convenience and efficiency in managing legal cases.</p>
+        <p>If you have any questions or need assistance, feel free to reach out to our support team.</p>
+        <p>Once again, welcome aboard!</p>
+    MSG;
+    try {
+        $mail->send();
+        echo json_encode(["response" => "Registration Successful.", ["status" => true]]);
+    } catch (Exception $e) {
+        echo "Mailer Error: " . $mail->ErrorInfo;
+    }
     http_response_code(200);
-    header('Location: ' . '../../../login.php');
+    header('Location: ' . '../../../auth/user-login.php');
     exit();
 }

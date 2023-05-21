@@ -1,8 +1,12 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 class Table
 {
     private $tbl, $header, $content, $id, $styles, $attributes, $columns,
-        $hasActions, $tblName, $columnTypes, $columnAttributes;
+        $hasActions, $tblName, $columnTypes, $columnAttributes, $updateAction, $addAction;
 
     public function __construct($tbl)
     {
@@ -38,14 +42,19 @@ class Table
                 if ($subKey === "id") $id = $subRow;
                 $count++;
             }
-            $rows .= $this->hasActions ? <<<ACTIONS
+
+            $rows .= $this->hasActions && $_SESSION["role"] == 1 ? <<<ACTIONS
         <td class="row-action-buttons">
-            <button class="action-button">Edit</button>
+            <button class="action-button edit-button" target-table="{$this->getId()}">Edit</button>
             <button class="action-button" data-id="{$id}" target-table="{$this->getTblName()}" onclick="delete_row('{$id}','{$this->getTblName()}')">Delete</button>
             <button class="action-button view-button">View</button>
         </td>
 
-        ACTIONS : "";
+        ACTIONS : ($this->hasActions && $_SESSION["role"] == 2 ? <<<ACTIONS
+        <td class="row-action-buttons">
+            <button class="action-button view-button">View</button>
+        </td>
+        ACTIONS : "");
             $rows .= "</tr>";
         }
         $this->setContent($rows);
@@ -57,7 +66,7 @@ class Table
         $this->build_header();
         $this->build_rows();
         return <<<TBL
-            <table class="tbl">
+            <table class="tbl" {$this->get_formatted_id()} form-update-action={$this->updateAction} form-add-action="{$this->addAction}">
                 <thead>
                     {$this->getHeader()}
                 </thead>
@@ -139,6 +148,12 @@ class Table
     public function getId()
     {
         return $this->id;
+    }
+
+    public function get_formatted_id()
+    {
+        $id = "id='{$this->id}'";
+        return $id;
     }
 
     /**
@@ -266,11 +281,51 @@ class Table
      *
      * @return  self
      */
-    public function setColumnAttributes($columnIndex,$columnAttributes)
+    public function setColumnAttributes($columnIndex, $columnAttributes)
     {
         $this->columnAttributes[$columnIndex] = $columnAttributes;
 
         return $this;
     }
 
+
+    /**
+     * Get the value of updateAction
+     */
+    public function getUpdateAction()
+    {
+        return $this->updateAction;
+    }
+
+    /**
+     * Set the value of updateAction
+     *
+     * @return  self
+     */
+    public function setUpdateAction($updateAction)
+    {
+        $this->updateAction = $updateAction;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of addAction
+     */
+    public function getAddAction()
+    {
+        return $this->addAction;
+    }
+
+    /**
+     * Set the value of addAction
+     *
+     * @return  self
+     */
+    public function setAddAction($addAction)
+    {
+        $this->addAction = $addAction;
+
+        return $this;
+    }
 }

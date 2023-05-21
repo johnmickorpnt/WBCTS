@@ -1,26 +1,62 @@
 <?php
 include("php/config/Database.php");
-include("php/models/Admins.php");
 include("components/Table.php");
+include("components/Modal.php");
 
-$title = "Blotter - Admin Users";
+include("php/models/Admins.php");
+include("php/models/User.php");
+
+
+$title = "Blotters - Admin Users";
 
 $database = new Database();
 $db = $database->connect();
 
-$usersObj = new Admins($db);
+$userObj = new User($db);
+$users = $userObj->getAll();
+$userTbl = new Table($users);
+$userTbl->setTblName("users");
+$userTbl->setHasActions(true);
+$userTbl->setColumnAttributes("6", "style='display:none'");
+$userTbl->setColumnAttributes("7", "style='display:none'");
+$userTbl->setColumnAttributes("8", "style='display:none'");
 
-// Evaluate if the current user's role
-$users = $usersObj->read();
+$userTbl->setId("users_tbl");
+$userTbl->setUpdateAction("php/functions/users/update.php");
+$userTbl->setAddAction("php/functions/users/create.php");
 
-$usersTable = new Table($users);
-
-// Add a button for new admin user and for staff user
+$newModal = new Modal("modal");
+$newModal->setHeader("Admin User");
+$newModal->setContent(<<<CONTENT
+<form id="data-form"></form>
+CONTENT);
 $content = <<<CONTENT
 	<section class="dashboard-section">
-		<h4>Current Users</h4>
-		{$usersTable->build_table()}
+		<h4>Latest User</h4>
+        <div class="row-actions">
+			<div class="search-bar">
+				<input type="text" id="search-input" placeholder="Search...">
+				<button id="search-button">
+					<i class="fas fa-search"></i>
+				</button>
+			</div>
+			<button class="table-action-btn add-button"style="margin-left:auto" data-table="users_tbl">
+				<i class="fa-solid fa-plus"></i> Add
+			</button>
+		</div>
+		{$userTbl->build_table()}
 	</section>
+	{$newModal->build_modal()}
+	
 CONTENT;
 ?>
+
+<!-- <div id="modal" class="modal">
+	<div class="modal-content">
+		<span class="close">&times;</span>
+		<h3>Modal Title</h3>
+		<form id="data-form">
+		</form>
+	</div>
+</div> -->
 <?php include 'templates/default.php'; ?>

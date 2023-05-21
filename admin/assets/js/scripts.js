@@ -13,6 +13,9 @@ separator.forEach((el) => {
 
 document.addEventListener('DOMContentLoaded', function () {
     var viewButtons = document.querySelectorAll('.view-button');
+    var editButtons = document.querySelectorAll('.edit-button');
+    var addButtons = document.querySelectorAll('.add-button');
+
     var modal = document.getElementById('modal');
     var form = document.getElementById('data-form');
 
@@ -28,23 +31,134 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Clear previous form inputs
             form.innerHTML = '';
+            form.setAttribute("mode", "view");
+            var fetchPromises = []; // Array to store fetch promises
+            var inputs = []; // Array to store input elements
 
             rowData.forEach(async function (data, index) {
                 if ((index + 1) === rowData.length) return;
 
                 try {
                     let th = row.parentNode.parentNode.querySelector('th:nth-child(' + (index + 1) + ')');
-                    let elId;
-                    let input;
 
                     let label = document.createElement('label');
                     label.textContent = th.textContent;
+
+                    var input; // Declare the input variable
+
+                    if (th.getAttribute("data-type") === 'textarea') {
+                        input = document.createElement('textarea');
+                        input.setAttribute("disabled", "disabled");
+
+                        input.value = data;
+                    }
+                    else if (th.getAttribute("data-type") === 'datetime') {
+                        input = document.createElement('input');
+                        input.setAttribute('type', 'datetime');
+                        input.classList.add("datetime");
+                        input.setAttribute("disabled", "disabled");
+                        input.value = data;
+                    }
+                    else if (th.getAttribute("data-type") === 'select') {
+                        input = document.createElement('select');
+                        input.setAttribute("name", index);
+                        input.setAttribute("disabled", "disabled");
+                        let tbl = th.getAttribute("data-table");
+
+                        // Push the fetch promise to the array
+                        fetchPromises.push(fetchTblData(tbl, null));
+
+                        // Store the input element in the array
+                        inputs.push(input);
+                    }
+                    else {
+                        input = document.createElement('input');
+                        input.setAttribute('type', 'text');
+                        input.setAttribute("disabled", "disabled");
+
+                        input.value = data;
+                    }
+
+                    input.setAttribute("name", th.getAttribute("col-name"));
+                    input.setAttribute("id", th.getAttribute("col-name"));
+
+                    let div = document.createElement('div');
+                    div.appendChild(label);
+                    div.appendChild(input);
+
+                    form.appendChild(div);
+                } catch (e) {
+                    console.error(e)
+                }
+            });
+
+            // Wait for all fetch requests to complete
+            Promise.all(fetchPromises)
+                .then(results => {
+                    results.forEach((tblJson, index) => {
+                        tblJson.forEach(function (obj) {
+                            var option = document.createElement('option');
+                            option.textContent = obj.role ?? obj.id;
+
+                            option.value = obj.id;
+                            inputs[index].appendChild(option); // Use the corresponding input element
+                        });
+                    });
+
+                    // Add the submit button after the loop
+                    var submitButton = document.createElement('button');
+                    submitButton.setAttribute('type', 'submit');
+                    submitButton.textContent = 'Submit';
+                    form.appendChild(submitButton);
+
+                    // Show the modal
+                    modal.showModal();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert(error);
+                });
+        });
+    });
+
+    editButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            var row = this.closest('tr');
+            var rowData = Array.from(row.cells).map(function (cell, index) {
+                if (index === 0) {
+                    id = cell.textContent; // Assuming the ID is in the first column
+                }
+                return cell.textContent;
+            });
+
+            // Clear previous form inputs
+            form.innerHTML = '';
+            form.setAttribute("method", "POST");
+            var fetchPromises = []; // Array to store fetch promises
+            var inputs = []; // Array to store input elements
+
+            rowData.forEach(async function (data, index) {
+                if ((index + 1) === rowData.length) return;
+                let tableId = button.getAttribute("target-table");
+                var table = document.getElementById(tableId);
+                if (!table) {
+                    console.error('Table not found');
+                    return;
+                }
+                form.setAttribute("action", table.getAttribute("form-update-action"));
+                // form.setAttribute("action", table.getAttribute("form-add-action"));
+                try {
+                    let th = row.parentNode.parentNode.querySelector('th:nth-child(' + (index + 1) + ')');
+
+                    let label = document.createElement('label');
+                    label.textContent = th.textContent;
+
+                    var input; // Declare the input variable
 
                     if (th.getAttribute("data-type") === 'textarea') {
                         input = document.createElement('textarea');
                         input.value = data;
                     }
-
                     else if (th.getAttribute("data-type") === 'datetime') {
                         input = document.createElement('input');
                         input.setAttribute('type', 'datetime');
@@ -54,22 +168,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     else if (th.getAttribute("data-type") === 'select') {
                         input = document.createElement('select');
                         input.setAttribute("name", index);
-                        // Assuming you have an array of options
-                        // Example AJAX request using Fetch API
+
                         let tbl = th.getAttribute("data-table");
-                        let tblJson = await fetchTblData(tbl, null);
-                        tblJson.forEach(function (obj) {
-                            // Create an option element
-                            var option = document.createElement('option');
 
-                            // Set the text and value of the option
-                            option.textContent = obj.role;
-                            option.value = obj.id;
+                        // Push the fetch promise to the array
+                        fetchPromises.push(fetchTblData(tbl, null));
 
-                            input.appendChild(option);
-                        });
+                        // Store the input element in the array
+                        inputs.push(input);
                     }
-
                     else {
                         input = document.createElement('input');
                         input.setAttribute('type', 'text');
@@ -89,22 +196,132 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
+            // Wait for all fetch requests to complete
+            Promise.all(fetchPromises)
+                .then(results => {
+                    results.forEach((tblJson, index) => {
+                        tblJson.forEach(function (obj) {
+                            var option = document.createElement('option');
+                            option.textContent = obj.role ?? obj.id;
+                            option.value = obj.id;
+                            inputs[index].appendChild(option); // Use the corresponding input element
+                        });
+                    });
+
+                    // Add the submit button after the loop
+                    var submitButton = document.createElement('button');
+                    submitButton.setAttribute('type', 'submit');
+                    submitButton.textContent = 'Submit';
+                    form.appendChild(submitButton);
+
+                    // Show the modal
+                    modal.showModal();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert(error);
+                });
+        });
+    });
+
+    addButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            // Clear previous form inputs
+            form.innerHTML = '';
+            form.setAttribute("mode", "update");
+            form.setAttribute("method", "POST");
+            // Get the table ID from the data attribute
+            var tableId = button.getAttribute('data-table');
+
+            // Find the table using the table ID
+            var table = document.getElementById(tableId);
+            if (!table) {
+                console.error('Table not found');
+                return;
+            }
+            form.setAttribute("action", table.getAttribute("form-add-action"));
+
+            // Get the table headers
+            var headers = Array.from(table.querySelectorAll('th:not(:last-child)'));
+
+            // Extract the column names from the headers
+            var columns = headers.map(function (header) {
+                return header.getAttribute('col-name');
+            });
+
+            // Loop through each column
+            columns.forEach(function (column) {
+                if (column === "id") return;
+                try {
+                    let th = table.querySelector('th[col-name="' + column + '"]');
+                    let input;
+
+                    console.log(th);
+                    let label = document.createElement('label');
+                    label.textContent = th.innerHTML;
+
+                    if (th.getAttribute("data-type") === 'textarea') {
+                        input = document.createElement('textarea');
+                    } else if (th.getAttribute("data-type") === 'datetime') {
+                        input = document.createElement('input');
+                        input.setAttribute('type', 'datetime');
+                        input.classList.add("datetime");
+                    } else if (th.getAttribute("data-type") === 'select') {
+                        input = document.createElement('select');
+                        input.setAttribute("name", column);
+
+                        // Assuming you have an array of options
+                        // Example AJAX request using Fetch API
+
+                        if (!th.hasAttribute("data-table") && th.hasAttribute("data-options")) {
+
+                        }
+                        let tbl = th.getAttribute("data-table");
+                        fetchTblData(tbl, null, function (data) {
+                            data.forEach(function (obj) {
+                                // Create an option element
+                                var option = document.createElement('option');
+
+                                // Set the text and value of the option
+                                option.textContent = obj.role ?? obj.id;
+                                option.value = obj.id;
+
+                                input.appendChild(option);
+                            });
+                        });
+                    } else {
+                        input = document.createElement('input');
+                        input.setAttribute('type', 'text');
+                    }
+
+                    input.setAttribute("name", th.getAttribute("col-name"));
+                    input.setAttribute("id", th.getAttribute("col-name"));
+
+                    let div = document.createElement('div');
+                    div.appendChild(label);
+                    div.appendChild(input);
+
+                    form.appendChild(div);
+                } catch (e) {
+                    console.error(e);
+                }
+            });
+
+            var submitButton = document.createElement('button');
+            submitButton.setAttribute('type', 'submit');
+            submitButton.textContent = 'Submit';
+            form.appendChild(submitButton);
+
             // Show the modal
             modal.showModal();
         });
     });
 
-    // Close the modal when the close button is clicked
     var closeButton = document.querySelector('.close-modal');
     closeButton.addEventListener('click', function () {
         modal.close();
     });
-
 });
-
-function setOptions() {
-
-}
 
 function showAddModal() {
 }
@@ -112,15 +329,14 @@ function showAddModal() {
 function showModal() {
 }
 
-let fetchTblData = async (table, id) => {
+let fetchTblData = async (table, id, fn) => {
     var params = new URLSearchParams();
     params.append("table", table);
 
     if (id !== null)
         params.append("id", id);
 
-
-    return fetch('http://localhost/wbcts/admin/php/functions/view.php', {
+    return await fetch('http://localhost/wbcts/admin/php/functions/view.php', {
         method: 'POST',
         body: params,
         headers: {
@@ -128,12 +344,21 @@ let fetchTblData = async (table, id) => {
         }
     })
         .then(res => res.json())
+        .then(data => {
+            if (typeof fn === 'function') {
+                fn(data); // Pass the data to the callback function
+            }
+            return data; // Return the data from the fetch function
+        })
         .catch(error => {
             console.error('Error:', error);
             alert(error);
         });
 }
 
+function create() {
+
+}
 
 function delete_row(id, table) {
     var params = new URLSearchParams();
@@ -152,7 +377,6 @@ function delete_row(id, table) {
     })
         .then(res => res.json())
         .finally((data) => {
-            alert("data");
             location.reload();
         })
         .catch(error => {

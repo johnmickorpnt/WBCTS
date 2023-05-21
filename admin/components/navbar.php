@@ -2,6 +2,9 @@
 $url = $_SERVER['REQUEST_URI'];
 $parts = explode('/', rtrim($url, '/'));
 $lastPart = end($parts);
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 ?>
 <div class="nav-wrapper">
     <nav>
@@ -24,58 +27,58 @@ $lastPart = end($parts);
                 </span>
                 <div class="dropdown open dropdown-toggle">
                     <div class="drop-down-item <?= $lastPart == "settlements" ? "active" : ""?>">
-                        <a href="">
+                        <a href="settlements">
                             <i class="fa-solid fa-check"></i>
                             Settlements
                         </a>
                     </div>
                     <div class="drop-down-item <?= $lastPart == "blotters" ? "active" : ""?>">
-                        <a href="">
+                        <a href="blotters">
                             <i class="fa-sharp fa-regular fa-clipboard"></i>
                             Blotter Records
                         </a>
                     </div>
                 </div>
             </li>
-            <li class="separator">
-                <span>
-                    Manage Users
-                    <i class="fa-solid fa-chevron-down fa-lg"></i>
-                </span>
-                <div class="dropdown open dropdown-toggle">
-                    <div class="drop-down-item <?= $lastPart == "admins" ? "active" : ""?>">
-                        <a href="">
-                            <i class="fa-solid fa-user"></i>
-                            Admin Users
-                        </a>
+                <?php
+                $adminsIsActive = $lastPart == "admins" ? "active" : '';
+                $rolesIsActive = $lastPart == "roles" ? "active" : '';
+                $residentsIsActive = $lastPart == "users" ? "active" : '';
+                echo $_SESSION["role"] == "1" ? <<<NAV
+                <li class="separator">
+                    <span>
+                        Manage Users
+                        <i class="fa-solid fa-chevron-down fa-lg"></i>
+                    </span>
+                    <div class="dropdown open dropdown-toggle">
+                        <div class="drop-down-item {$adminsIsActive}">
+                            <a href="admins">
+                                <i class="fa-solid fa-user"></i>
+                                System Users
+                            </a>
+                        </div>
+                        <div class="drop-down-item {$rolesIsActive}">
+                            <a href="roles">
+                                <i class="fas fa-user-cog"></i>
+                                Roles
+                            </a>
+                        </div>
+                        <div class="drop-down-item {$residentsIsActive}">
+                            <a href="users">
+                                <i class="fa-sharp fa-solid fa-users"></i>
+                                Residents
+                            </a>
+                        </div>
                     </div>
-                    <div class="drop-down-item <?= $lastPart == "staffs" ? "active" : ""?>">
-                        <a href="">
-                            <i class="fa-solid fa-user-tie"></i>
-                            Staffs
-                        </a>
-                    </div>
-                    <div class="drop-down-item <?= $lastPart == "roles" ? "active" : ""?>">
-                        <a href="">
-                            <i class="fas fa-user-cog"></i>
-                            Roles
-                        </a>
-                    </div>
-                    <div class="drop-down-item <?= $lastPart == "residents" ? "active" : ""?>">
-                        <a href="">
-                            <i class="fa-sharp fa-solid fa-users"></i>
-                            Residents
-                        </a>
-                    </div>
-                </div>
-            </li>
+                </li>
+                NAV : "" ?>
             <!-- <li class="separator">
                 <span>
                     Your Account
                 </span>
             </li> -->
             <li>
-                <a href="">
+                <a href="auth/logout">
                     <i class="fa-solid fa-right-from-bracket"></i>
                     Logout
                 </a>

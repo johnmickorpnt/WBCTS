@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("php/config/Database.php");
 include("php/models/Blotters.php");
 include("components/Table.php");
@@ -16,11 +17,15 @@ $blotters = $blotterObj->getAll();
 
 $blottersTable = new Table($blotters);
 $blottersTable->setHasActions(true);
+$blottersTable->setId("blotters_table");
+$blottersTable->setTblName("blotter_records");
 $blottersTable->setColumnType("5", "textarea");
 $blottersTable->setColumnAttributes("5", "style='display:none'");
 $blottersTable->setColumnAttributes("8", "style='display:none'");
 $blottersTable->setColumnAttributes("10", "style='display:none'");
 $blottersTable->setColumnAttributes("11", "style='display:none'");
+$blottersTable->setUpdateAction("php/functions/blotters/update.php");
+$blottersTable->setAddAction("php/functions/blotters/create.php");
 
 
 $newModal = new Modal("modal");
@@ -31,11 +36,19 @@ CONTENT);
 
 // Add button and modal for new row
 $content = <<<CONTENT
-    <button>
-        Add new
-    </button>
 	<section class="dashboard-section">
 		<h4>Latest Blotters</h4>
+        <div class="row-actions">
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Search...">
+                <button id="search-button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <button class="table-action-btn add-button"style="margin-left:auto" data-table="blotters_table">
+                <i class="fa-solid fa-plus"></i> Add
+            </button>
+        </div>
         {$blottersTable->build_table()}
 	</section>
 	{$newModal->build_modal()}

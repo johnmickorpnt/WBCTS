@@ -3,8 +3,32 @@ include_once("BaseModel.php");
 class Blotters extends BaseModel
 {
     protected $table = "blotter_records";
-    protected $id, $complaint_id, $respondent_name, $respondent_address, $incident_location,
+    protected $id, $complainant_id, $respondent_name, $respondent_address, $incident_location,
         $incident_details, $incident_type, $blotter_status, $investigating_officer, $remarks, $created_at, $updated_at, $columns;
+
+    public function save()
+    {
+        $data = [
+            'id' => $this->getId(),
+            'complainant_id' => $this->getComplainant_id(),
+            'respondent_name' => $this->getRespondent_name(),
+            'respondent_address' => $this->getRespondent_address(),
+            'incident_location' => $this->getIncident_location(),
+            'incident_details' => $this->getIncident_details(),
+            'incident_type' => $this->getIncident_type(),
+            'blotter_status' => $this->getBlotter_status(),
+            'investigating_officer' => $this->getInvestigating_officer(),
+            'remarks' => $this->getRemarks(),
+        ];
+        // Check if the record already exists in the database
+        if ($this->id != null) {
+            // Perform an update operation
+            $this->update($this->id, $data);
+        } else {
+            // Perform an insert operation
+            $this->insert($data);
+        }
+    }
 
     /**
      * Get the value of id
@@ -22,26 +46,6 @@ class Blotters extends BaseModel
     public function setId($id)
     {
         $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of complaint_id
-     */
-    public function getComplaint_id()
-    {
-        return $this->complaint_id;
-    }
-
-    /**
-     * Set the value of complaint_id
-     *
-     * @return  self
-     */
-    public function setComplaint_id($complaint_id)
-    {
-        $this->complaint_id = $complaint_id;
 
         return $this;
     }
@@ -274,6 +278,26 @@ class Blotters extends BaseModel
     public function setUpdated_at($updated_at)
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of complainant_id
+     */ 
+    public function getComplainant_id()
+    {
+        return $this->complainant_id;
+    }
+
+    /**
+     * Set the value of complainant_id
+     *
+     * @return  self
+     */ 
+    public function setComplainant_id($complainant_id)
+    {
+        $this->complainant_id = $complainant_id;
 
         return $this;
     }

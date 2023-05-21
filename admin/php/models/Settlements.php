@@ -6,7 +6,27 @@ class Settlements extends BaseModel
     protected $table = "settlements";
     protected $id, $blotter_id, $resolution, $settlement_details, $settled_by, $remarks,
         $date_settled, $updated_at, $columns;
+    public function save()
+    {
+        $data = [
+            "id" => $this->getId(),
+            "blotter_id" => $this->getBlotter_id(),
+            "resolution" => $this->getResolution(),
+            "settlement_details" => $this->getSettlement_details(),
+            "settled_by" => $this->getSettled_by(),
+            "remarks" => $this->getRemarks(),
+            "date_settled" => $this->getDate_settled(),
+        ];
 
+        // Check if the record already exists in the database
+        if ($this->id != null) {
+            // Perform an update operation
+            $this->update($this->id, $data);
+        } else {
+            // Perform an insert operation
+            $this->insert($data);
+        }
+    }
     /**
      * Get the value of updated_at
      */

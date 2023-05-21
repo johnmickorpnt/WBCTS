@@ -6,6 +6,44 @@ class Admins extends BaseModel
     protected $table = "admin_users";
     protected $id, $firstname, $lastname, $role, $username, $password, $created_at, $updated_at, $columns;
 
+    public function save()
+    {
+        $data = [
+            "id" => $this->getId(),
+            "firstname" => $this->getFirstname(),
+            "lastname" => $this->getLastname(),
+            "role" => $this->getRole(),
+            "username" => $this->getUsername(),
+            "password" => $this->getPassword(),
+        ];
+        // Check if the record already exists in the database
+        if ($this->id) {
+            // Perform an update operation
+            $this->update($this->id, $data);
+        } else {
+
+            // Perform an insert operation
+            $this->insert($data);
+        }
+    }
+
+    public function login($username, $password)
+    {
+        $q = "SELECT * FROM {$this->table} WHERE username = :username AND password = :password";
+        $stmt = $this->conn->prepare($q);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', $password);
+        $stmt->execute();
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($user) {
+            $role = $user['role'];
+            return ['user' => $user, 'role' => $role];
+        }
+
+        return null;
+    }
+
     /**
      * Get the value of id
      */

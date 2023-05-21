@@ -14,7 +14,8 @@ $valid = array();
 $errors = array();
 $result = array();
 
-$complaint_id = null;
+$id = null;
+$complainant_id = null;
 $respondent_name = null;
 $respondent_address = null;
 $incident_location = null;
@@ -30,7 +31,7 @@ if (!isset($_POST['complainant_id'])) {
     array_push($errors, "Complaint ID is empty. Please select a complaint.");
 } else {
     $valid[0] = true;
-    $complaint_id = $_POST['complainant_id'];
+    $complainant_id = $_POST['complainant_id'];
 }
 
 if (!isset($_POST['respondent_name'])) {
@@ -100,11 +101,21 @@ if (!isset($_POST['remarks'])) {
 if (!$userObj->get($_POST['complainant_id'])) {
     array_push($errors, "Selected User does not exist. Please reload the page and try again.");
     $valid[9] = false;
-} else $valid[9] = true;
+} else {
+    $valid[9] = true;
+}
+
+if (!isset($_POST['id'])) {
+    $valid[10] = false;
+    array_push($errors, "Remarks are empty. Please provide remarks.");
+} else {
+    $id = $_POST['id'];
+    $valid[10] = true;
+}
 
 // EXIT OUT OF SCRIPT IF THERE ARE VALIDATION ERRORS
 if (in_array(false, $valid)) {
-    $result = array(["status" => 0, "errors" => $errors]);
+    $result = array("status" => 0, "errors" => $errors);
     echo json_encode($result, JSON_PRETTY_PRINT);
     exit;
 }
@@ -112,7 +123,8 @@ if (in_array(false, $valid)) {
 // END OF VALIDATION BLOCK
 
 $blotterRecord = new Blotters($db);
-$blotterRecord->setComplainant_id($complaint_id);
+$blotterRecord->setId($id);
+$blotterRecord->setComplainant_id($complainant_id);
 $blotterRecord->setRespondent_name($respondent_name);
 $blotterRecord->setRespondent_address($respondent_address);
 $blotterRecord->setIncident_location($incident_location);
@@ -124,7 +136,7 @@ $blotterRecord->setRemarks($remarks);
 
 $saveResult = $blotterRecord->save();
 
-$result = array(["status" => 1, "msg" => "Blotter record updated successfully"]);
+$result = array("status" => 1, "msg" => "Blotter record updated successfully");
 // echo json_encode($result, JSON_PRETTY_PRINT);
 
 header('Location: ' . $_SERVER['HTTP_REFERER']);

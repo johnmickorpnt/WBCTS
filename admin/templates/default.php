@@ -1,3 +1,13 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) session_start();
+
+if (!isset($_SESSION['user'])) {
+    // Redirect to the login page
+    header('Location: auth/login');
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +21,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/fbc9e418a7.js" crossorigin="anonymous"></script>
-    
+
 </head>
 
 <body>
@@ -22,4 +32,5 @@
     </main>
 </body>
 <script src="assets/js/scripts.js"></script>
+
 </html>

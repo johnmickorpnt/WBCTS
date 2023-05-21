@@ -20,11 +20,14 @@ $settlementTable = new Table($settlements);
 $blottersTable = new Table($blotters);
 
 $settlementTable->setHasActions(false);
-$blottersTable->setHasActions(true);
+$blottersTable->setHasActions(false);
 
 $settlementTable->setTblName("settlements");
 $blottersTable->setTblName("blotters");
-
+$blottersTable->setColumnAttributes("5", "style='display:none'");
+$blottersTable->setColumnAttributes("8", "style='display:none'");
+$blottersTable->setColumnAttributes("10", "style='display:none'");
+$blottersTable->setColumnAttributes("11", "style='display:none'");
 
 $content = <<<CONTENT
 	<section class="dashboard-section">

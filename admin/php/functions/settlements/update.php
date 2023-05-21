@@ -70,6 +70,14 @@ if (!isset($_POST['date_settled'])) {
     $valid[5] = true;
 }
 
+if (!isset($_POST['id'])) {
+    $valid[6] = false;
+    array_push($errors, "ID is empty. Please provide the date.");
+} else {
+    $id = $_POST['id'];
+    $valid[6] = true;
+}
+
 // EXIT OUT OF SCRIPT IF THERE ARE VALIDATION ERRORS
 if (in_array(false, $valid)) {
     $result = array("status" => 0, "errors" => $errors);
@@ -83,6 +91,7 @@ if (in_array(false, $valid)) {
 $settlements = new Settlements($db);
 
 // Set the properties of the Settlements object
+$settlements->setId($id);
 $settlements->setBlotter_id($blotter_id);
 $settlements->setResolution($resolution);
 $settlements->setSettlement_details($settlement_details);
@@ -90,9 +99,8 @@ $settlements->setSettled_by($settled_by);
 $settlements->setRemarks($remarks);
 $settlements->setDate_settled($date_settled);
 
-// Create the settlement
+// Update the settlement
 $settlements->save();
 
 header("Location: " . $_SERVER['HTTP_REFERER']);
 exit();
-?>
