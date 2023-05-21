@@ -33,7 +33,7 @@ foreach ($data as $row) {
 }
 
 
-$containerStyles = "margin-top: 12rem; padding:3rem";
+$containerStyles = "margin-top: 12rem; padding:3rem; height:100%";
 $title = "Registration";
 $errors = "";
 if (isset($_SESSION["errors"])) {
