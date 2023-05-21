@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/fbc9e418a7.js" crossorigin="anonymous"></script>
+    
 </head>
 
 <body>
@@ -20,5 +21,5 @@
         <?= $content ? $content : "" ?>
     </main>
 </body>
-
+<script src="assets/js/scripts.js"></script>
 </html>

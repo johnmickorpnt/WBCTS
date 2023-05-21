@@ -1,29 +1,10 @@
 <?php
-class Blotters
+include_once("BaseModel.php");
+class Blotters extends BaseModel
 {
-    private $conn;
-    private $table = "blotter_records";
-    private $id, $complaint_id, $respondent_name, $respondent_address, $incident_location,
-        $incident_details, $incident_type, $blotter_status, $investigating_officer, $remarks, $columns;
-
-    public function __construct($db)
-    {
-        $this->conn = $db;
-    }
-
-    public function read()
-    {
-        $q = !isset($this->columns) ? "SELECT * FROM {$this->table};" :
-            "SELECT {$this->format_columns()} FROM {$this->table};";
-        $stmt = $this->conn->prepare($q);
-        $stmt->execute();
-        $data = array();
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            array_push($data, $row);
-        }
-        return $data;
-    }
-
+    protected $table = "blotter_records";
+    protected $id, $complaint_id, $respondent_name, $respondent_address, $incident_location,
+        $incident_details, $incident_type, $blotter_status, $investigating_officer, $remarks, $created_at, $updated_at, $columns;
 
     /**
      * Get the value of id
@@ -255,5 +236,45 @@ class Blotters
                 $index < sizeof($this->columns) - 1 ? "," : "";
         }
         return $columnString;
+    }
+
+    /**
+     * Get the value of created_at
+     */
+    public function getCreated_at()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * Set the value of created_at
+     *
+     * @return  self
+     */
+    public function setCreated_at($created_at)
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of updated_at
+     */
+    public function getUpdated_at()
+    {
+        return $this->updated_at;
+    }
+
+    /**
+     * Set the value of updated_at
+     *
+     * @return  self
+     */
+    public function setUpdated_at($updated_at)
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
     }
 }

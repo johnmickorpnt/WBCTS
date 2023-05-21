@@ -1,21 +1,26 @@
 <?php
 class Table
 {
-    private $tbl, $header, $content, $id, $styles, $attributes, $columns;
-    
+    private $tbl, $header, $content, $id, $styles, $attributes, $columns,
+        $hasActions, $tblName, $columnTypes, $columnAttributes;
+
     public function __construct($tbl)
     {
         $this->tbl = $tbl;
+        $this->columnTypes = []; // Initialize the array for column types
     }
 
     public function build_header()
     {
         $header = "";
         $keys = array_keys($this->tbl[0]);
-        foreach ($keys as $th) {
+        foreach ($keys as $index => $th) {
             $newTh = str_replace("_", " ", $th);
-            $header .= "<th>$newTh</th>";
+            $dataType = isset($this->columnTypes[$index]) ? $this->columnTypes[$index] : 'input'; // Set the column type based on the array value
+            $attributes = isset($this->columnAttributes[$index]) ? $this->columnAttributes[$index] : ''; // Set the attributes based on the array value
+            $header .= "<th data-type='$dataType' col-name='$th' $attributes>$newTh</th>";
         }
+        $header .= $this->hasActions ? "<th>Actions</th>" : "";
         $this->setHeader($header);
     }
 
@@ -25,13 +30,27 @@ class Table
         foreach ($this->tbl as $key => $row) {
             if (gettype($row) != "array") break;
             $rows .= "<tr>";
+            $id = 0;
+            $count = 0;
             foreach ($row as $subKey => $subRow) {
-                $rows .= "<td>$subRow</td>";
+                $attributes = isset($this->columnAttributes[$count]) ? $this->columnAttributes[$count] : ''; // Set the attributes based on the array value
+                $rows .= "<td $attributes>$subRow</td>";
+                if ($subKey === "id") $id = $subRow;
+                $count++;
             }
+            $rows .= $this->hasActions ? <<<ACTIONS
+        <td class="row-action-buttons">
+            <button class="action-button">Edit</button>
+            <button class="action-button" data-id="{$id}" target-table="{$this->getTblName()}" onclick="delete_row('{$id}','{$this->getTblName()}')">Delete</button>
+            <button class="action-button view-button">View</button>
+        </td>
+
+        ACTIONS : "";
             $rows .= "</tr>";
         }
         $this->setContent($rows);
     }
+
 
     function build_table()
     {
@@ -47,6 +66,11 @@ class Table
                 </tbody>
             </table>
             TBL;
+    }
+
+    public function setColumnType($columnIndex, $columnType)
+    {
+        $this->columnTypes[$columnIndex] = $columnType;
     }
 
     /**
@@ -188,4 +212,65 @@ class Table
 
         return $this;
     }
+
+    /**
+     * Get the value of hasActions
+     */
+    public function getHasActions()
+    {
+        return $this->hasActions;
+    }
+
+    /**
+     * Set the value of hasActions
+     *
+     * @return  self
+     */
+    public function setHasActions($hasActions)
+    {
+        $this->hasActions = $hasActions;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of tblName
+     */
+    public function getTblName()
+    {
+        return $this->tblName;
+    }
+
+    /**
+     * Set the value of tblName
+     *
+     * @return  self
+     */
+    public function setTblName($tblName)
+    {
+        $this->tblName = $tblName;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of columnAttributes
+     */
+    public function getColumnAttributes()
+    {
+        return $this->columnAttributes;
+    }
+
+    /**
+     * Set the value of columnAttributes
+     *
+     * @return  self
+     */
+    public function setColumnAttributes($columnIndex,$columnAttributes)
+    {
+        $this->columnAttributes[$columnIndex] = $columnAttributes;
+
+        return $this;
+    }
+
 }

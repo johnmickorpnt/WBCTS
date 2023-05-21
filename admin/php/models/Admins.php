@@ -1,26 +1,10 @@
 <?php
-class Admins
+include_once("BaseModel.php");
+class Admins extends BaseModel
 {
-    private $conn;
-    private $table = "admin_users";
-    private $id, $firstname, $lastname, $role, $username, $password, $created_at, $updated_at;
-
-    public function __construct($db)
-    {
-        $this->conn = $db;
-    }
-
-    public function read()
-    {
-        $q = "SELECT * FROM {$this->table};";
-        $stmt = $this->conn->prepare($q);
-        $stmt->execute();
-        $data = array();
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            array_push($data, $row);
-        }
-        return $data;
-    }
+    protected $conn;
+    protected $table = "admin_users";
+    protected $id, $firstname, $lastname, $role, $username, $password, $created_at, $updated_at, $columns;
 
     /**
      * Get the value of id
@@ -183,6 +167,26 @@ class Admins
     public function setRole($role)
     {
         $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of columns
+     */
+    public function getColumns()
+    {
+        return $this->columns;
+    }
+
+    /**
+     * Set the value of columns
+     *
+     * @return  self
+     */
+    public function setColumns($columns)
+    {
+        $this->columns = $columns;
 
         return $this;
     }

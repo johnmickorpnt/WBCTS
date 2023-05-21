@@ -1,27 +1,11 @@
 <?php
-class Settlements
+include_once("BaseModel.php");
+class Settlements extends BaseModel
 {
-    private $conn;
-    private $table = "settlements";
-    private $id, $blotter_id, $resolution, $settlement_details, $settled_by, $remarks,
+    protected $conn;
+    protected $table = "settlements";
+    protected $id, $blotter_id, $resolution, $settlement_details, $settled_by, $remarks,
         $date_settled, $updated_at, $columns;
-
-    public function __construct($db)
-    {
-        $this->conn = $db;
-    }
-
-    public function read()
-    {
-        $q = "SELECT * FROM {$this->table};";
-        $stmt = $this->conn->prepare($q);
-        $stmt->execute();
-        $data = array();
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            array_push($data, $row);
-        }
-        return $data;
-    }
 
     /**
      * Get the value of updated_at
