@@ -29,7 +29,7 @@
 
 <body>
     <?= component("header.php") ?>
-    <main <?= isset($containerStyles) ? "style='{$containerStyles}'" : "" ?>>
+    <main class="main-container" <?= isset($containerStyles) ? "style='{$containerStyles}'" : "" ?>>
         <?= $content ? $content : "" ?>
     </main>
     <?= component("footer.php") ?>

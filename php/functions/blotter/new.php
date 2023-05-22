@@ -3,6 +3,9 @@ session_start();
 header('Content-Type: application/json; charset=utf-8');
 require_once "../../config/Database.php";
 require_once "../../models/Blotter.php";
+require '../../../vendor/autoload.php';
+
+require_once "../../phpqrcode/qrlib.php";
 
 $valid = array();
 $_SESSION["msg"] = array();
@@ -59,7 +62,6 @@ if (empty($remarks)) {
     array_push($_SESSION["errors"], "Remarks is missing.");
 } else $valid[6] = true;
 
-
 if (in_array(false, $valid)) {
     http_response_code(422);
     header('Location: ' . $_SERVER['HTTP_REFERER']);
@@ -77,7 +79,21 @@ $blotter->setRemarks($remarks);
 $result = $blotter->save();
 
 if ($result) {
-    http_response_code(200);
-    header('Location: ' . '../../../blotter-records.php');
+    $lastInsertedId = $db->lastInsertId();
+
+    // Generate QR code using the last inserted ID
+    $qrCodeData = 'Blotter ID: ' . $lastInsertedId;
+
+    $qrCodeOptions = [
+        'errorCorrectionLevel' => 'L',
+        'margin' => 4,
+        'size' => 300
+    ];
+
+    // Construct the URL with query parameters
+    $nextPageUrl = '../../../generate-qr-code.php' . '?blotterData=' . urlencode(json_encode($qrCodeData)) . '&qrCodeOptions=' . urlencode(json_encode($qrCodeOptions));
+
+    // Redirect to the next page
+    header('Location: ' . $nextPageUrl);
     exit();
 }

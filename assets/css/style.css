@@ -141,6 +141,41 @@ tbody tr:hover {
   }
 }
 
+
+main.main-container {
+  height: 100%;
+}
+
+.qrcode-container {
+  display: flex;
+  padding: 1rem;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.qrcode-container>img {
+  height: 50%;
+  width: 50%;
+}
+
+/* CSS for the download button */
+.download-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.download-button:hover {
+  background-color: #45a049;
+}
+
+
 /*.col-1{
   position: relative;
   position: absolute;

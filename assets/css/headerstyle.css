@@ -1,15 +1,19 @@
-*{
-  margin: 0; padding: 0;
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
   font-family: Arial, sans-serif;
   text-transform: capitalize;
   text-decoration: none;
 }
-header{
+
+header {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   background: white;
-  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   padding: 20px 5%;
   display: flex;
   align-items: center;
@@ -17,33 +21,33 @@ header{
   z-index: 1000;
 }
 
-header .logo{
+header .logo {
   width: 120px;
 }
 
-header .navbar ul{
+header .navbar ul {
   list-style: none;
 }
 
-header .navbar ul li{
+header .navbar ul li {
   position: relative;
   padding-right: 5px;
   float: left;
 }
 
-header .navbar ul li a{
+header .navbar ul li a {
   font-size: 20px;
   padding: 20px;
   color: #333;
   display: block;
 }
 
-header .navbar ul li a:hover{
+header .navbar ul li a:hover {
   background: gray;
   color: #fff;
 }
 
-header .navbar ul li ul{
+header .navbar ul li ul {
   position: absolute;
   left: 0;
   width: 200px;
@@ -51,19 +55,20 @@ header .navbar ul li ul{
   display: none;
 }
 
-header .navbar ul li ul li{
+header .navbar ul li ul li {
   width: 100%;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
-header .navbar ul li:hover > ul{
+
+header .navbar ul li:hover>ul {
   display: inline-block;
 }
 
-#menu-bar{
+#menu-bar {
   display: none;
 }
 
-header label{
+header label {
   font-size: 20px;
   color: #333;
   cursor: pointer;
@@ -71,31 +76,35 @@ header label{
 }
 
 
-@media(max-width:991px){
+@media(max-width:991px) {
 
-  header{
+  header {
     padding: 20px;
   }
 
-  header label{
+  header label {
     display: initial;
   }
 
-  header .navbar{
+  header .navbar {
     position: absolute;
-    top: 100%; left: 0; right: 0;
+    top: 100%;
+    left: 0;
+    right: 0;
     background: #fff;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
   }
 
-  header .navbar ul li{
+  header .navbar ul li {
     width: 100%;
   }
-  header .navbar ul li ul{
+
+  header .navbar ul li ul {
     position: relative;
     width: 100%;
   }
-  #menu-bar:checked ~ .navbar{
+
+  #menu-bar:checked~.navbar {
     display: initial;
   }
 }

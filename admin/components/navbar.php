@@ -14,7 +14,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     <img src="assets/images/wbctsLogo-white.png" alt="logo">
                 </a>
             </li>
-            <li class="<?= $lastPart == "dashboard" ? "active" : ""?>">
+            <li class="<?= $lastPart == "dashboard" ? "active" : "" ?>">
                 <a href="">
                     <i class="fa-solid fa-list-ul"></i>
                     Dashboard
@@ -26,13 +26,13 @@ if (session_status() === PHP_SESSION_NONE) {
                     <i class="fa-solid fa-chevron-down fa-lg"></i>
                 </span>
                 <div class="dropdown open dropdown-toggle">
-                    <div class="drop-down-item <?= $lastPart == "settlements" ? "active" : ""?>">
+                    <div class="drop-down-item <?= $lastPart == "settlements" ? "active" : "" ?>">
                         <a href="settlements">
                             <i class="fa-solid fa-check"></i>
                             Settlements
                         </a>
                     </div>
-                    <div class="drop-down-item <?= $lastPart == "blotters" ? "active" : ""?>">
+                    <div class="drop-down-item <?= $lastPart == "blotters" ? "active" : "" ?>">
                         <a href="blotters">
                             <i class="fa-sharp fa-regular fa-clipboard"></i>
                             Blotter Records
@@ -40,11 +40,11 @@ if (session_status() === PHP_SESSION_NONE) {
                     </div>
                 </div>
             </li>
-                <?php
-                $adminsIsActive = $lastPart == "admins" ? "active" : '';
-                $rolesIsActive = $lastPart == "roles" ? "active" : '';
-                $residentsIsActive = $lastPart == "users" ? "active" : '';
-                echo $_SESSION["role"] == "1" ? <<<NAV
+            <?php
+            $adminsIsActive = $lastPart == "admins" ? "active" : '';
+            $rolesIsActive = $lastPart == "roles" ? "active" : '';
+            $residentsIsActive = $lastPart == "users" ? "active" : '';
+            echo $_SESSION["role"] == "1" ? <<<NAV
                 <li class="separator">
                     <span>
                         Manage Users
@@ -57,12 +57,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                 System Users
                             </a>
                         </div>
-                        <div class="drop-down-item {$rolesIsActive}">
-                            <a href="roles">
-                                <i class="fas fa-user-cog"></i>
-                                Roles
-                            </a>
-                        </div>
+                        
                         <div class="drop-down-item {$residentsIsActive}">
                             <a href="users">
                                 <i class="fa-sharp fa-solid fa-users"></i>
@@ -86,3 +81,11 @@ if (session_status() === PHP_SESSION_NONE) {
         </ul>
     </nav>
 </div>
+
+
+<!-- <div class="drop-down-item {$rolesIsActive}">
+                            <a href="roles">
+                                <i class="fas fa-user-cog"></i>
+                                Roles
+                            </a>
+                        </div> -->
