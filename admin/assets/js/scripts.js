@@ -104,13 +104,6 @@ document.addEventListener('DOMContentLoaded', function () {
                             inputs[index].appendChild(option); // Use the corresponding input element
                         });
                     });
-
-                    // Add the submit button after the loop
-                    var submitButton = document.createElement('button');
-                    submitButton.setAttribute('type', 'submit');
-                    submitButton.textContent = 'Submit';
-                    form.appendChild(submitButton);
-
                     // Show the modal
                     modal.showModal();
                 })
