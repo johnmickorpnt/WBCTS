@@ -22,6 +22,7 @@ $blottersTable->setTblName("blotter_records");
 $blottersTable->setColumnType("1", "select");
 $blottersTable->setColumnAttributes(1, "data-table='users'");
 $blottersTable->setColumnAttributes("5", "style='display:none'");
+$blottersTable->setColumnAttributes("6", "style='display:none'");
 $blottersTable->setColumnAttributes("8", "style='display:none'");
 $blottersTable->setColumnAttributes("10", "style='display:none'");
 $blottersTable->setColumnAttributes("11", "style='display:none'");
@@ -30,7 +31,7 @@ $blottersTable->setAddAction("php/functions/blotters/create.php");
 
 
 $newModal = new Modal("modal");
-$newModal->setHeader("Admin User");
+$newModal->setHeader("Blotter Records");
 $newModal->setContent(<<<CONTENT
 <form id="data-form"></form>
 CONTENT);

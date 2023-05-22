@@ -1,7 +1,7 @@
 const separator = document.querySelectorAll('.separator');
 const dropdown = document.querySelector('.dropdown');
 const chevronIcon = document.querySelector('.fa-chevron-down');
-
+const dialogOverlay = document.getElementById('dialogOverlay');
 
 separator.forEach((el) => {
     // console.log(el.querySelector(".dropdown"), el.querySelector('.fa-chevron-down'));
@@ -54,10 +54,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                     else if (th.getAttribute("data-type") === 'datetime') {
                         input = document.createElement('input');
-                        input.setAttribute('type', 'datetime');
-                        input.classList.add("datetime");
                         input.setAttribute("disabled", "disabled");
-                        input.value = data;
+                        input.setAttribute("type", "text");
+
+                        flatpickr(`#${th.getAttribute("col-name")}`, {
+                            enableTime: true,
+                            dateFormat: "Y-m-d H:i:s",
+                            altInput: true,
+                            altFormat: "F j, Y H:i:s",
+                            static: true
+                        });
                     }
                     else if (th.getAttribute("data-type") === 'select') {
                         input = document.createElement('select');
@@ -105,7 +111,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         });
                     });
                     // Show the modal
-                    modal.showModal();
+                    dialogOverlay.style.display = 'block';
+                    modal.show();
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -154,9 +161,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                     else if (th.getAttribute("data-type") === 'datetime') {
                         input = document.createElement('input');
-                        input.setAttribute('type', 'datetime');
-                        input.classList.add("datetime");
-                        input.value = data;
+                        input.setAttribute("type", "text");
+
+                        console.log(`#${th.getAttribute("col-name")}`)
+                        flatpickr(`#${th.getAttribute("col-name")}`, {
+                            enableTime: true,
+                            dateFormat: "Y-m-d H:i:s",
+                            altInput: true,
+                            altFormat: "F j, Y H:i:s",
+                            static: true
+                        });
                     }
                     else if (th.getAttribute("data-type") === 'select') {
                         input = document.createElement('select');
@@ -208,7 +222,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     form.appendChild(submitButton);
 
                     // Show the modal
-                    modal.showModal();
+                    dialogOverlay.style.display = 'block';
+                    modal.show();
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -249,7 +264,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     let th = table.querySelector('th[col-name="' + column + '"]');
                     let input;
 
-                    console.log(th);
                     let label = document.createElement('label');
                     label.textContent = th.innerHTML;
 
@@ -257,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         input = document.createElement('textarea');
                     } else if (th.getAttribute("data-type") === 'datetime') {
                         input = document.createElement('input');
-                        input.setAttribute('type', 'datetime');
+                        input.setAttribute("type", "text");
                         input.classList.add("datetime");
                     } else if (th.getAttribute("data-type") === 'select') {
                         input = document.createElement('select');
@@ -300,18 +314,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
+            flatpickr(".datetime", {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i:s",
+                altInput: true,
+                altFormat: "F j, Y H:i:s",
+            });
+
             var submitButton = document.createElement('button');
             submitButton.setAttribute('type', 'submit');
             submitButton.textContent = 'Submit';
             form.appendChild(submitButton);
 
             // Show the modal
-            modal.showModal();
+            dialogOverlay.style.display = 'block';
+            modal.show();
         });
     });
 
     var closeButton = document.querySelector('.close-modal');
     closeButton.addEventListener('click', function () {
+        dialogOverlay.style.display = 'none';
         modal.close();
     });
 });

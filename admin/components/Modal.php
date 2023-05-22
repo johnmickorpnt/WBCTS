@@ -20,6 +20,7 @@ class Modal{
         
         $attrbs = $this->getAttributes() !== null ? " " . implode(" ", $this->getAttributes()) : "";
         $content = <<<CONTENT
+        <div id="dialogOverlay"></div>
         <dialog id="{$this->getId()}" {$class}{$attrbs}{$modalCss}>
             <div class="modal-wrapper">
                 <div class="modal-header">

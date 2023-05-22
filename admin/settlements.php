@@ -21,6 +21,8 @@ $settlementsTable->setTblName("settlements");
 $settlementsTable->setColumnType("5", "textarea");
 $settlementsTable->setColumnAttributes("5", "style='display:none'");
 $settlementsTable->setColumnAttributes("8", "style='display:none'");
+$settlementsTable->setColumnType("6", "datetime");
+$settlementsTable->setColumnType("7", "datetime");
 $settlementsTable->setColumnAttributes("10", "style='display:none'");
 $settlementsTable->setColumnAttributes("11", "style='display:none'");
 $settlementsTable->setUpdateAction("php/functions/settlements/update.php");
