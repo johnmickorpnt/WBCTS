@@ -3,7 +3,7 @@ include("../config/Database.php");
 include("../models/Settlements.php");
 include("../models/Blotters.php");
 include("../models/Admins.php");
-include("../models/Residents.php");
+include("../models/User.php");
 include("../models/Roles.php");
 
 
@@ -29,7 +29,7 @@ if (isset($_POST["table"]) && !isset($_POST["id"])) {
 
     else if ($tbl == "admins") $obj = new Admins($db);
 
-    else if ($tbl == "residents") $obj = new Residents($db);
+    else if ($tbl == "users") $obj = new User($db);
 
     else if ($tbl == "settlements") $obj = new Settlements($db);
 

@@ -24,6 +24,7 @@ $blottersTable->setHasActions(false);
 
 $settlementTable->setTblName("settlements");
 $blottersTable->setTblName("blotters");
+$adminUsersTbl->setColumnType(2, "select");
 $blottersTable->setColumnAttributes("5", "style='display:none'");
 $blottersTable->setColumnAttributes("8", "style='display:none'");
 $blottersTable->setColumnAttributes("10", "style='display:none'");
