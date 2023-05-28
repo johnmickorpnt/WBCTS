@@ -3,7 +3,7 @@ class User
 {
     private $table = 'users';
     private $id, $first_name, $last_name, $email,
-        $contact_number, $address, $pass, $created_at, $updated_at;
+        $contact_number, $address, $pass, $is_archived, $created_at, $updated_at;
     private $conn;
 
 
@@ -239,4 +239,24 @@ class User
 
         return $this;
     }
+
+        /**
+         * Get the value of is_archived
+         */ 
+        public function getIs_archived()
+        {
+                return $this->is_archived;
+        }
+
+        /**
+         * Set the value of is_archived
+         *
+         * @return  self
+         */ 
+        public function setIs_archived($is_archived)
+        {
+                $this->is_archived = $is_archived;
+
+                return $this;
+        }
 }

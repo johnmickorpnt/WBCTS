@@ -88,6 +88,7 @@ $user->setEmail($email);
 $user->setContact_number($contact_number);
 $user->setAddress($address);
 $user->setPass(password_hash($pass, PASSWORD_DEFAULT));
+$user->setIs_archived(false);
 
 $result = $user->save();
 

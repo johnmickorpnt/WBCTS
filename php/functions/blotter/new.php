@@ -75,6 +75,7 @@ $blotter->setIncident_location($incident_location);
 $blotter->setIncident_details($incident_details);
 $blotter->setIncident_type($incident_type);
 $blotter->setRemarks($remarks);
+$blotter->setIs_archived(false);
 
 $result = $blotter->save();
 

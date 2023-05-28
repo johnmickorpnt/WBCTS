@@ -3,7 +3,7 @@ class Blotter
 {
     private $table = 'blotter_records';
     private $id, $respondent_name, $complainant_id, $respondent_address, $incident_location,
-        $incident_details, $incident_type, $blotter_status, $investigating_officer, $remarks;
+        $incident_details, $incident_type, $blotter_status, $investigating_officer, $remarks, $is_archived;
     private $conn;
 
 
@@ -248,4 +248,24 @@ class Blotter
 
         return $this;
     }
+
+        /**
+         * Get the value of is_archived
+         */ 
+        public function getIs_archived()
+        {
+                return $this->is_archived;
+        }
+
+        /**
+         * Set the value of is_archived
+         *
+         * @return  self
+         */ 
+        public function setIs_archived($is_archived)
+        {
+                $this->is_archived = $is_archived;
+
+                return $this;
+        }
 }
