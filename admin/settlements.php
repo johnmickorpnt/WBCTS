@@ -1,5 +1,13 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) session_start();
+
+if (!isset($_SESSION['user'])) {
+    // Redirect to the login page
+    header('Location: auth/login');
+    exit;
+}
+
+
 include("php/config/Database.php");
 include("php/models/Settlements.php");
 include("components/Table.php");

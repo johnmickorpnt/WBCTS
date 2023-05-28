@@ -352,7 +352,7 @@ let fetchTblData = async (table, id, fn) => {
     if (id !== null)
         params.append("id", id);
 
-    return await fetch('http://localhost/wbcts/admin/php/functions/view.php', {
+    return await fetch('php/functions/view.php', {
         method: 'POST',
         body: params,
         headers: {
@@ -372,8 +372,29 @@ let fetchTblData = async (table, id, fn) => {
         });
 }
 
-function create() {
+function archive_row(id, table) {
+    var params = new URLSearchParams();
+    params.append("id", id);
+    params.append("table", table);
 
+    let conf = confirm("Are you sure to archive this row?");
+
+    if (!conf) return;
+    fetch('php/functions/archive.php', {
+        method: 'POST',
+        body: params,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+        .then(res => res.json())
+        .finally((data) => {
+            location.reload();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert(error);
+        });
 }
 
 function delete_row(id, table) {
@@ -384,7 +405,7 @@ function delete_row(id, table) {
     let conf = confirm("Are you sure to delete this row?");
 
     if (!conf) return;
-    fetch('http://localhost/wbcts/admin/php/functions/delete.php', {
+    fetch('php/functions/delete.php', {
         method: 'POST',
         body: params,
         headers: {

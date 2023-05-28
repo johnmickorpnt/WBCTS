@@ -2,6 +2,8 @@
 session_start();
 include("../../models/Blotters.php");
 include("../../models/Residents.php");
+include("../../models/AuditTrail.php");
+
 include("../../config/Database.php");
 
 $database = new Database();
@@ -123,6 +125,16 @@ $blotterRecord->setInvestigating_officer($investigating_officer);
 $blotterRecord->setRemarks($remarks);
 
 $saveResult = $blotterRecord->save();
+
+// Create the audit trail entry
+$auditTrail = new AuditTrail($db);
+$auditTrail->setUserId($_SESSION['user']['id']);
+$auditTrail->setAction('Created a new blotter record');
+$auditTrail->setTimestamp(date('Y-m-d H:i:s'));
+$auditTrail->save();
+
+
+
 
 $result = array(["status" => 1, "msg" => "Blotter record updated successfully"]);
 // echo json_encode($result, JSON_PRETTY_PRINT);

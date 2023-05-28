@@ -1,13 +1,6 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
-
-if (!isset($_SESSION['user'])) {
-    // Redirect to the login page
-    header('Location: auth/login');
-    exit;
-}
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 

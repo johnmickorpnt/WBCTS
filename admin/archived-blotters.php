@@ -20,10 +20,10 @@ $db = $database->connect();
 
 $blotterObj = new Blotters($db);
 $blotterObj->setColumns(["respondent_name", "incident_location", "incident_type", "blotter_status"]);
-$blotters = $blotterObj->getAllWhere(["is_archived" => 0]);
+$blotters = $blotterObj->getAllWhere(["is_archived" => 1]);
 
 $blottersTable = new Table($blotters);
-$blottersTable->setHasActions(true);
+$blottersTable->setHasActions(false);
 $blottersTable->setId("blotters_table");
 $blottersTable->setTblName("blotter_records");
 $blottersTable->setColumnType("1", "select");
@@ -36,7 +36,7 @@ $blottersTable->setColumnAttributes("10", "style='display:none'");
 $blottersTable->setColumnAttributes("11", "style='display:none'");
 $blottersTable->setUpdateAction("php/functions/blotters/update.php");
 $blottersTable->setAddAction("php/functions/blotters/create.php");
-$blottersTable->setIsArchiveTable(false);
+$blottersTable->setIsArchiveTable(true);
 
 $newModal = new Modal("modal");
 $newModal->setHeader("Blotter Records");

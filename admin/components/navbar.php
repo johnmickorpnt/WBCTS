@@ -38,12 +38,22 @@ if (session_status() === PHP_SESSION_NONE) {
                             Blotter Records
                         </a>
                     </div>
+                    <div class="drop-down-item <?= $lastPart == "audit-trail" ? "active" : "" ?>">
+                        <a href="audit-trail">
+                            <i class="fas fa-file-alt"></i>
+                            Audit Trail
+                        </a>
+                    </div>
                 </div>
             </li>
             <?php
             $adminsIsActive = $lastPart == "admins" ? "active" : '';
             $rolesIsActive = $lastPart == "roles" ? "active" : '';
             $residentsIsActive = $lastPart == "users" ? "active" : '';
+            $archivedBlottersIsActive = $lastPart == "archived-blotters" ? "active" : '';
+
+            $archivedResidentsIsActive = $lastPart == "archived-users" ? "active" : '';
+
             echo $_SESSION["role"] == "1" ? <<<NAV
                 <li class="separator">
                     <span>
@@ -62,6 +72,26 @@ if (session_status() === PHP_SESSION_NONE) {
                             <a href="users">
                                 <i class="fa-sharp fa-solid fa-users"></i>
                                 Residents
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li class="separator">
+                    <span>
+                        Manage Archived Records
+                        <i class="fa-solid fa-chevron-down fa-lg"></i>
+                    </span>
+                    <div class="dropdown open dropdown-toggle">
+                        <div class="drop-down-item {$archivedBlottersIsActive}" ? "active" : "" ?>">
+                            <a href="archived-blotters">
+                                <i class="fa-solid fa-box-archive"></i>
+                                Archived Blotter Records
+                            </a>
+                        </div>
+                        <div class="drop-down-item {$archivedResidentsIsActive}">
+                            <a href="archived-users">
+                                <i class="fa-solid fa-user-xmark"></i>
+                                Archived Residents
                             </a>
                         </div>
                     </div>

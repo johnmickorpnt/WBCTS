@@ -1,12 +1,14 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+if (session_status() === PHP_SESSION_NONE) session_start();
+if (!isset($_SESSION['user'])) {
+    // Redirect to the login page
+    header('Location: auth/login');
+    exit;
 }
-
 class Table
 {
     private $tbl, $header, $content, $id, $styles, $attributes, $columns,
-        $hasActions, $tblName, $columnTypes, $columnAttributes, $updateAction, $addAction;
+        $hasActions, $tblName, $columnTypes, $columnAttributes, $updateAction, $addAction, $isArchiveTable;
 
     public function __construct($tbl)
     {
@@ -42,11 +44,15 @@ class Table
                 if ($subKey === "id") $id = $subRow;
                 $count++;
             }
-
+            $deleteBtn  = $this->isArchiveTable ? <<<BTN
+                <button class="action-button" data-id="{$id}" target-table="{$this->getTblName()}" onclick="delete_row('{$id}','{$this->getTblName()}')">Delete</button>
+            BTN : <<<BTN
+                <button class="action-button" data-id="{$id}" target-table="{$this->getTblName()}" onclick="archive_row('{$id}','{$this->getTblName()}')">Archive</button>
+            BTN;
             $rows .= $this->hasActions && $_SESSION["role"] == 1 ? <<<ACTIONS
         <td class="row-action-buttons">
             <button class="action-button edit-button" target-table="{$this->getId()}">Edit</button>
-            <button class="action-button" data-id="{$id}" target-table="{$this->getTblName()}" onclick="delete_row('{$id}','{$this->getTblName()}')">Delete</button>
+            {$deleteBtn}
             <button class="action-button view-button">View</button>
         </td>
 
@@ -325,6 +331,26 @@ class Table
     public function setAddAction($addAction)
     {
         $this->addAction = $addAction;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of isArchiveTable
+     */
+    public function getIsArchiveTable()
+    {
+        return $this->isArchiveTable;
+    }
+
+    /**
+     * Set the value of isArchiveTable
+     *
+     * @return  self
+     */
+    public function setIsArchiveTable($isArchiveTable)
+    {
+        $this->isArchiveTable = $isArchiveTable;
 
         return $this;
     }

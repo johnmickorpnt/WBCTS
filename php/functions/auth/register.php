@@ -121,7 +121,6 @@ if ($result) {
     MSG;
     try {
         $mail->send();
-        echo json_encode(["response" => "Registration Successful.", ["status" => true]]);
     } catch (Exception $e) {
         echo "Mailer Error: " . $mail->ErrorInfo;
     }

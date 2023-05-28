@@ -1,7 +1,9 @@
 <?php
 session_start();
 include("../../models/Settlements.php");
+include("../../models/AuditTrail.php");
 include("../../config/Database.php");
+
 
 $database = new Database();
 $db = $database->connect();
@@ -92,6 +94,12 @@ $settlements->setDate_settled($date_settled);
 
 // Create the settlement
 $settlements->save();
+
+$auditTrail = new AuditTrail($db);
+$auditTrail->setUserId($_SESSION['user']['id']);
+$auditTrail->setAction('Created a settlements record');
+$auditTrail->setTimestamp(date('Y-m-d H:i:s'));
+$auditTrail->save();
 
 header("Location: " . $_SERVER['HTTP_REFERER']);
 exit();

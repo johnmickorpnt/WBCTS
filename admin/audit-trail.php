@@ -2,9 +2,9 @@
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['user'])) {
-	// Redirect to the login page
-	header('Location: auth/login');
-	exit;
+    // Redirect to the login page
+    header('Location: auth/login');
+    exit;
 }
 
 include("php/config/Database.php");
@@ -13,6 +13,7 @@ include("components/Modal.php");
 
 include("php/models/Admins.php");
 include("php/models/User.php");
+include("php/models/AuditTrail.php");
 
 
 $title = "Blotters - Residents";
@@ -20,26 +21,15 @@ $title = "Blotters - Residents";
 $database = new Database();
 $db = $database->connect();
 
-$userObj = new User($db);
-$users = $userObj->getAllWhere(["is_archived" => 0]);
-$userTbl = new Table($users);
-$userTbl->setTblName("users");
-$userTbl->setHasActions(true);
-$userTbl->setColumnAttributes("5", "style='display:none'");
-$userTbl->setColumnAttributes("6", "style='display:none'");
-$userTbl->setColumnAttributes("7", "style='display:none'");
-$userTbl->setColumnAttributes("8", "style='display:none'");
-$userTbl->setColumnAttributes("9", "style='display:none'");
+$auditTrail = new AuditTrail($db);
+$audits = $auditTrail->getAll();
+$auditsTbl = new Table($audits);
+$auditsTbl->setTblName("users");
+$auditsTbl->setHasActions(false);
+$auditsTbl->setId("users_tbl");
+$auditsTbl->setUpdateAction("php/functions/users/update.php");
+$auditsTbl->setAddAction("php/functions/users/create.php");
 
-$userTbl->setId("users_tbl");
-$userTbl->setUpdateAction("php/functions/users/update.php");
-$userTbl->setAddAction("php/functions/users/create.php");
-
-$newModal = new Modal("modal");
-$newModal->setHeader("Admin User");
-$newModal->setContent(<<<CONTENT
-<form id="data-form"></form>
-CONTENT);
 $content = <<<CONTENT
 	<section class="dashboard-section">
 		<h4>Latest User</h4>
@@ -54,9 +44,8 @@ $content = <<<CONTENT
 				<i class="fa-solid fa-plus"></i> Add
 			</button>
 		</div>
-		{$userTbl->build_table()}
+		{$auditsTbl->build_table()}
 	</section>
-	{$newModal->build_modal()}
 	
 CONTENT;
 ?>

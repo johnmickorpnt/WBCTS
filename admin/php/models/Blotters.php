@@ -4,7 +4,7 @@ class Blotters extends BaseModel
 {
     protected $table = "blotter_records";
     protected $id, $complainant_id, $respondent_name, $respondent_address, $incident_location,
-        $incident_details, $incident_type, $blotter_status, $investigating_officer, $remarks, $created_at, $updated_at, $columns;
+        $incident_details, $incident_type, $blotter_status, $investigating_officer, $remarks, $is_archived, $created_at, $updated_at, $columns;
 
     public function save()
     {
@@ -19,6 +19,8 @@ class Blotters extends BaseModel
             'blotter_status' => $this->getBlotter_status(),
             'investigating_officer' => $this->getInvestigating_officer(),
             'remarks' => $this->getRemarks(),
+            'is_archived' => $this->getIs_archived(),
+
         ];
         // Check if the record already exists in the database
         if ($this->id != null) {
@@ -284,7 +286,7 @@ class Blotters extends BaseModel
 
     /**
      * Get the value of complainant_id
-     */ 
+     */
     public function getComplainant_id()
     {
         return $this->complainant_id;
@@ -294,10 +296,30 @@ class Blotters extends BaseModel
      * Set the value of complainant_id
      *
      * @return  self
-     */ 
+     */
     public function setComplainant_id($complainant_id)
     {
         $this->complainant_id = $complainant_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of is_archived
+     */
+    public function getIs_archived()
+    {
+        return $this->is_archived;
+    }
+
+    /**
+     * Set the value of is_archived
+     *
+     * @return  self
+     */
+    public function setIs_archived($is_archived)
+    {
+        $this->is_archived = $is_archived;
 
         return $this;
     }

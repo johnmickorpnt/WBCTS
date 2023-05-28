@@ -2,6 +2,7 @@
 header('Content-Type: application/json; charset=utf-8');
 require_once "../../config/Database.php";
 require_once "../../models/User.php";
+require_once "../../models/AuditTrail.php";
 
 $valid = array();
 $_SESSION["msg"] = array();
@@ -73,6 +74,12 @@ $user->setContact_number($contact_number);
 $user->setPassword($password);
 
 $result = $user->save();
+
+$auditTrail = new AuditTrail($db);
+$auditTrail->setUserId($_SESSION['user']['id']);
+$auditTrail->setAction('Updated a user\'s account');
+$auditTrail->setTimestamp(date('Y-m-d H:i:s'));
+$auditTrail->save();
 
 header("Location: " . $_SERVER['HTTP_REFERER']);
 exit();

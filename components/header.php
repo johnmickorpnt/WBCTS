@@ -10,7 +10,7 @@
 			<li><a href="on-settlements">Settlements</a></li>
 			<li><a href="blotter-records">Blotter Records</a>
 				<ul>
-					<li><a href="new-blotter">New Blotter</li></a>
+					<li><a href="new-blotter">New Case</li></a>
 					<li><a href="blotter-records">View Records</li></a>
 				</ul>
 			</li>

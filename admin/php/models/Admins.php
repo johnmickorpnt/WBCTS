@@ -4,7 +4,7 @@ class Admins extends BaseModel
 {
     protected $conn;
     protected $table = "admin_users";
-    protected $id, $firstname, $lastname, $role, $username, $password, $created_at, $updated_at, $columns;
+    protected $id, $firstname, $lastname, $role, $username, $password, $is_archived, $created_at, $updated_at, $columns;
 
     public function save()
     {
@@ -225,6 +225,26 @@ class Admins extends BaseModel
     public function setColumns($columns)
     {
         $this->columns = $columns;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of is_archived
+     */ 
+    public function getIs_archived()
+    {
+        return $this->is_archived;
+    }
+
+    /**
+     * Set the value of is_archived
+     *
+     * @return  self
+     */ 
+    public function setIs_archived($is_archived)
+    {
+        $this->is_archived = $is_archived;
 
         return $this;
     }

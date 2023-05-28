@@ -32,12 +32,11 @@ if (!isset($_POST['email']) || !isset($_POST['pass'])) {
     $result = $user->login($email, $pass);
     // Fetch the user from the database
     $user = $result->fetch(PDO::FETCH_ASSOC);
-    print_r($user);
     // Verify the password
     if ($user && password_verify($pass, $user["password"])) {
         // Password is correct
         $_SESSION["id"] = $user["id"];
-        header("Location: ../../../index.php");
+        header("Location: /index.php");
         exit();
     } else {
         array_push($_SESSION["errors"], "Invalid Email/Password");

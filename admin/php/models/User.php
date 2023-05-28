@@ -4,7 +4,7 @@ class User extends BaseModel
 {
     protected $conn;
     protected $table = "users";
-    protected $id, $firstname, $lastname, $email, $contact_number, $address, $password, $created_at, $updated_at, $columns;
+    protected $id, $firstname, $lastname, $email, $contact_number, $address, $password, $is_archived, $created_at, $updated_at, $columns;
 
     public function save()
     {
@@ -16,6 +16,7 @@ class User extends BaseModel
             "contact_number" => $this->getContact_number(),
             "address" => $this->getAddress(),
             "password" => $this->getPassword(),
+            "is_archived" => $this->getIs_archived(),
         ];
         // Check if the record already exists in the database
         if ($this->id) {
@@ -31,7 +32,7 @@ class User extends BaseModel
     {
         $q = "SELECT * FROM {$this->table} WHERE username = '{$username}' AND password = '{$password}'";
         $stmt = $this->conn->prepare($q);
-        $stmt->execute();          
+        $stmt->execute();
         return $stmt;
     }
 
@@ -232,6 +233,26 @@ class User extends BaseModel
     public function setUpdated_at($updated_at)
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of is_archived
+     */
+    public function getIs_archived()
+    {
+        return $this->is_archived;
+    }
+
+    /**
+     * Set the value of is_archived
+     *
+     * @return  self
+     */
+    public function setIs_archived($is_archived)
+    {
+        $this->is_archived = $is_archived;
 
         return $this;
     }

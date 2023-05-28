@@ -39,6 +39,16 @@ class BaseModel
 
         return $stmt->rowCount();
     }
+    // Archive a row by ID
+    public function archiveRow($id)
+    {
+        $sql = "UPDATE {$this->table} SET is_archived = 1 WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+        return $stmt->rowCount();
+    }
 
     // Delete a record
     public function delete($id)
@@ -64,6 +74,40 @@ class BaseModel
 
     // Get all records
     public function getAll()
+    {
+        // $columns = $this->columns != null ? $this->format_columns() : '*';
+        $sql = "SELECT * FROM {$this->table}";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getAllWhere($conditions = [])
+    {
+        $sql = "SELECT * FROM {$this->table}";
+        $values = [];
+
+        if (!empty($conditions)) {
+            $sql .= " WHERE ";
+            $conditionsArr = [];
+
+            foreach ($conditions as $key => $value) {
+                $conditionsArr[] = "$key = :$key";
+                $values[":$key"] = $value;
+            }
+
+            $sql .= implode(" AND ", $conditionsArr);
+        }
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute($values);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Get all records
+    public function where()
     {
         // $columns = $this->columns != null ? $this->format_columns() : '*';
         $sql = "SELECT * FROM {$this->table}";

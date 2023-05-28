@@ -1,7 +1,10 @@
 <?php
+session_start();
 header('Content-Type: application/json; charset=utf-8');
 require_once "../../config/Database.php";
 require_once "../../models/Admins.php";
+require_once "../../models/AuditTrail.php";
+
 
 $valid = array();
 $_SESSION["msg"] = array();
@@ -58,9 +61,21 @@ $user->setLastname($lastname);
 $user->setRole($role);
 $user->setUsername($username);
 $user->setPassword($password);
+$user->setIs_archived(false);
 
 $result = $user->save();
 
+$auditTrail = new AuditTrail($db);
+$auditTrail->setUserId($_SESSION['user']['id']);
+$auditTrail->setAction('Updated an admin account');
+$auditTrail->setTimestamp(date('Y-m-d H:i:s'));
+$auditTrail->save();
+
+$auditTrail = new AuditTrail($db);
+$auditTrail->setUserId($_SESSION['user']['id']);
+$auditTrail->setAction('Updated an admin account');
+$auditTrail->setTimestamp(date('Y-m-d H:i:s'));
+$auditTrail->save();
 
 http_response_code(200);
 header("Location: " . $_SERVER['HTTP_REFERER']);

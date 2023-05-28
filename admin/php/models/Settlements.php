@@ -5,7 +5,7 @@ class Settlements extends BaseModel
     protected $conn;
     protected $table = "settlements";
     protected $id, $blotter_id, $resolution, $settlement_details, $settled_by, $remarks,
-        $date_settled, $updated_at, $columns;
+        $date_settled, $is_archived, $updated_at, $columns;
     public function save()
     {
         $data = [
@@ -16,6 +16,7 @@ class Settlements extends BaseModel
             "settled_by" => $this->getSettled_by(),
             "remarks" => $this->getRemarks(),
             "date_settled" => $this->getDate_settled(),
+            "is_archived" => $this->getIs_archived(),
         ];
 
         // Check if the record already exists in the database
@@ -203,6 +204,26 @@ class Settlements extends BaseModel
     public function setColumns($columns)
     {
         $this->columns = $columns;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of is_archived
+     */
+    public function getIs_archived()
+    {
+        return $this->is_archived;
+    }
+
+    /**
+     * Set the value of is_archived
+     *
+     * @return  self
+     */
+    public function setIs_archived($is_archived)
+    {
+        $this->is_archived = $is_archived;
 
         return $this;
     }

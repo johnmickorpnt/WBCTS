@@ -1,4 +1,12 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) session_start();
+
+if (!isset($_SESSION['user'])) {
+    // Redirect to the login page
+    header('Location: auth/login');
+    exit;
+}
+
 include("php/config/Database.php");
 include("php/models/Settlements.php");
 include("php/models/Blotters.php");
@@ -24,7 +32,7 @@ $blottersTable->setHasActions(false);
 
 $settlementTable->setTblName("settlements");
 $blottersTable->setTblName("blotters");
-$adminUsersTbl->setColumnType(2, "select");
+$blottersTable->setColumnType(2, "select");
 $blottersTable->setColumnAttributes("5", "style='display:none'");
 $blottersTable->setColumnAttributes("8", "style='display:none'");
 $blottersTable->setColumnAttributes("10", "style='display:none'");
