@@ -201,6 +201,7 @@ nav .drop-down-item a:hover {
 .search-bar {
     display: flex;
     align-items: center;
+    flex-direction: row;
 }
 
 #search-input {

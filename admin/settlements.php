@@ -21,6 +21,9 @@ $db = $database->connect();
 
 $settlementsObj = new Settlements($db);
 $blotters = $settlementsObj->getAll();
+if (isset($_GET["search"]))
+	$blotters = $settlementsObj->search($_GET["search"], 0);
+$searchTerm = isset($_GET["search"]) ? $_GET["search"] : "";
 
 $settlementsTable = new Table($blotters);
 $settlementsTable->setHasActions(true);
@@ -49,14 +52,14 @@ CONTENT);
 // Add button and modal for new row
 $content = <<<CONTENT
 	<section class="dashboard-section">
-		<h4>Latest Blotters</h4>
+		<h4>Latest Settlements</h4>
         <div class="row-actions">
-            <div class="search-bar">
-                <input type="text" id="search-input" placeholder="Search...">
+            <form class="search-bar" method="GET" action="#">
+                <input type="text" id="search-input" name="search" placeholder="Search..." value={$searchTerm}>
                 <button id="search-button">
                     <i class="fas fa-search"></i>
                 </button>
-            </div>
+            </form>
             <button class="table-action-btn add-button"style="margin-left:auto" data-table="settlements_table">
                 <i class="fa-solid fa-plus"></i> Add
             </button>

@@ -1,5 +1,6 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
+if($_SESSION["role"] == "2") header("Location: access-denied");
 
 if (!isset($_SESSION['user'])) {
 	// Redirect to the login page
@@ -22,6 +23,11 @@ $db = $database->connect();
 
 $userObj = new User($db);
 $users = $userObj->getAllWhere(["is_archived" => 0]);
+
+if (isset($_GET["search"]))
+    $blotters = $blotterObj->search($_GET["search"], 0);
+$searchTerm = isset($_GET["search"]) ? $_GET["search"] : "";
+
 $userTbl = new Table($users);
 $userTbl->setTblName("users");
 $userTbl->setHasActions(true);
@@ -44,12 +50,12 @@ $content = <<<CONTENT
 	<section class="dashboard-section">
 		<h4>Latest User</h4>
         <div class="row-actions">
-			<div class="search-bar">
-				<input type="text" id="search-input" placeholder="Search...">
+			<form class="search-bar" method="GET" action="#">
+				<input type="text" id="search-input" name="search" placeholder="Search..." value={$searchTerm}>
 				<button id="search-button">
 					<i class="fas fa-search"></i>
 				</button>
-			</div>
+			</form>
 			<button class="table-action-btn add-button"style="margin-left:auto" data-table="users_tbl">
 				<i class="fa-solid fa-plus"></i> Add
 			</button>

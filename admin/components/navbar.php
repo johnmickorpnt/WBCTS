@@ -15,7 +15,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 </a>
             </li>
             <li class="<?= $lastPart == "dashboard" ? "active" : "" ?>">
-                <a href="">
+                <a href="dashboard">
                     <i class="fa-solid fa-list-ul"></i>
                     Dashboard
                 </a>
@@ -26,12 +26,12 @@ if (session_status() === PHP_SESSION_NONE) {
                     <i class="fa-solid fa-chevron-down fa-lg"></i>
                 </span>
                 <div class="dropdown open dropdown-toggle">
-                    <div class="drop-down-item <?= $lastPart == "settlements" ? "active" : "" ?>">
+                    <!-- <div class="drop-down-item <?= $lastPart == "settlements" ? "active" : "" ?>">
                         <a href="settlements">
                             <i class="fa-solid fa-check"></i>
                             Settlements
                         </a>
-                    </div>
+                    </div> -->
                     <div class="drop-down-item <?= $lastPart == "blotters" ? "active" : "" ?>">
                         <a href="blotters">
                             <i class="fa-sharp fa-regular fa-clipboard"></i>
@@ -82,7 +82,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         <i class="fa-solid fa-chevron-down fa-lg"></i>
                     </span>
                     <div class="dropdown open dropdown-toggle">
-                        <div class="drop-down-item {$archivedBlottersIsActive}" ? "active" : "" ?>">
+                        <div class="drop-down-item {$archivedBlottersIsActive}" ? "active" : "">
                             <a href="archived-blotters">
                                 <i class="fa-solid fa-box-archive"></i>
                                 Archived Blotter Records

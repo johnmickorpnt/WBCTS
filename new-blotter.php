@@ -15,9 +15,13 @@ if (isset($_SESSION["errors"])) {
 
 $content = <<<CONTENT
 <form name="RegistrationForm" method="post" action="php/functions/blotter/new.php">
+    <div class="field">
+        <label for="complainant_name"><b>Complainant name:</b></label><br>
+        <input type="text" placeholder="Enter The complainant name" name="complainant_name" id="complainant_name" required>
+    </div>    
     <div style="display: flex; gap:1rem; width:100%">
         <div class="field" style="width: 50%;">
-            <label for="respondent_name"><b>Respondent Full Name:</b></label><br>
+            <label for="respondent_name"><b>Respondent/Pinablotter Full Name:</b></label><br>
             <input type="text" placeholder="Enter Name" name="respondent_name" id="respondent_name" required>
         </div>
         <div class="field" style="width: 50%;">
@@ -33,6 +37,7 @@ $content = <<<CONTENT
         <label for="incident_details"><b>Incident Details:</b></label><br>
         <textarea type="text" placeholder="Enter Details of the Details" name="incident_details" id="incident_details" required style="width:100%"></textarea>
     </div>
+    
     <div class="field" style="display: flex; flex-direction: column;">
         <label for="incident_type">Incident Type:</label>
         <select id="incident_type" name="incident_type">
@@ -40,6 +45,7 @@ $content = <<<CONTENT
             <option value="Physical Abuse">Physical Abuse</option>
             <option value="Verbal Abuse">Verbal Abuse</option>
             <option value="Staffa">Staffa</option>
+            <option value="other">Other</option>
         </select>
     </div>
     <input type="hidden" value="{$_SESSION['id']}" id="complainant_id" name="complainant_id">

@@ -1,0 +1,3 @@
+Gmail Account for the Email sender
+email: blotter.wbcts.project@gmail.com
+password: 7GAtfn74w68P

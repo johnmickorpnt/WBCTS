@@ -14,7 +14,7 @@
 					<li><a href="blotter-records">View Records</li></a>
 				</ul>
 			</li>
-			<li><a href="qr-code">QR Code Tracking</a></li>
+			<!-- <li><a href="qr-code">QR Code Tracking</a></li> -->
 			<?php
 			echo isset($_SESSION["id"]) ? <<<CONTENT
 				<li><a href="blotter-records">Profile</a>

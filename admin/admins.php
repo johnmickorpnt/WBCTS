@@ -1,5 +1,6 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
+if($_SESSION["role"] == "2") header("Location: access-denied");
 
 if (!isset($_SESSION['user'])) {
     // Redirect to the login page
@@ -19,10 +20,15 @@ $database = new Database();
 $db = $database->connect();
 
 $adminUserObj = new Admins($db);
+
 $adminUsers = $adminUserObj->getAll();
+if (isset($_GET["search"]))
+	$adminUsers = $adminUserObj->search($_GET["search"], 0);
+$searchTerm = isset($_GET["search"]) ? $_GET["search"] : "";
+
 $adminUsersTbl = new Table($adminUsers);
 $adminUsersTbl->setTblName("admin_users");
-$adminUsersTbl->setHasActions(true);
+$adminUsersTbl->setHasActions(false);
 $adminUsersTbl->setColumnType(3, "select");
 $adminUsersTbl->setColumnType(6, "datetime");
 $adminUsersTbl->setColumnType(7, "datetime");
@@ -30,35 +36,30 @@ $adminUsersTbl->setColumnAttributes("6", "style='display:none'");
 $adminUsersTbl->setColumnAttributes("7", "style='display:none'");
 $adminUsersTbl->setIsArchiveTable(true);
 
+$searchTerm = isset($_GET["search"]) ? $_GET["search"] : "";
 
 $adminUsersTbl->setColumnAttributes(3, "data-table='roles'");
 $adminUsersTbl->setId("admins_tbl");
 $adminUsersTbl->setUpdateAction("php/functions/admins/update.php");
 $adminUsersTbl->setAddAction("php/functions/admins/create.php");
+$adminUsersTbl->setIsArchiveTable(false);
 
-$newModal = new Modal("modal");
-$newModal->setHeader("Admin User");
-$newModal->setContent(<<<CONTENT
-<form id="data-form"></form>
-CONTENT);
 $content = <<<CONTENT
 	<section class="dashboard-section">
 		<h4>Latest System Users</h4>
         <div class="row-actions">
-			<div class="search-bar">
-				<input type="text" id="search-input" placeholder="Search...">
+			<form class="search-bar" method="GET" action="#">
+				<input type="text" id="search-input" name="search" placeholder="Search..." value={$searchTerm}>
 				<button id="search-button">
 					<i class="fas fa-search"></i>
 				</button>
-			</div>
-			<button class="table-action-btn add-button"style="margin-left:auto" data-table="admins_tbl">
+			</form>
+			<a href="auth/register" class="table-action-btn add-button"style="margin-left:auto; text-decoration:none"">
 				<i class="fa-solid fa-plus"></i> Add
-			</button>
+			</a>
 		</div>
 		{$adminUsersTbl->build_table()}
 	</section>
-	{$newModal->build_modal()}
-	
 CONTENT;
 ?>
 

@@ -16,6 +16,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
     <script src="https://kit.fontawesome.com/fbc9e418a7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>

@@ -4,7 +4,7 @@ class Admins extends BaseModel
 {
     protected $conn;
     protected $table = "admin_users";
-    protected $id, $firstname, $lastname, $role, $username, $password, $is_archived, $created_at, $updated_at, $columns;
+    protected $id, $firstname, $lastname, $role, $email, $username, $password, $is_verified, $is_archived, $created_at, $updated_at, $columns;
 
     public function save()
     {
@@ -13,19 +13,42 @@ class Admins extends BaseModel
             "firstname" => $this->getFirstname(),
             "lastname" => $this->getLastname(),
             "role" => $this->getRole(),
+            "email" => $this->getEmail(),
             "username" => $this->getUsername(),
             "password" => $this->getPassword(),
         ];
         // Check if the record already exists in the database
         if ($this->id) {
             // Perform an update operation
-            $this->update($this->id, $data);
+            return $this->update($this->id, $data);
         } else {
 
             // Perform an insert operation
-            $this->insert($data);
+            return $this->insert($data);
         }
     }
+
+    public function search($term, $archived)
+    {
+        $q = "SELECT * FROM admin_users
+        WHERE (id LIKE :term OR firstname LIKE :term OR lastname LIKE :term OR username LIKE :term OR role LIKE :term OR email LIKE :term) 
+        AND is_archived = :archived;";
+
+        $stmt = $this->conn->prepare($q);
+        $term = '%' . $term . '%';  // Add wildcards for LIKE operator
+
+        // Bind values using prepared statements
+        $stmt->bindValue(':term', $term, PDO::PARAM_STR);
+        $stmt->bindValue(':archived', $archived, PDO::PARAM_INT);
+
+        // Execute the query
+        $stmt->execute();
+
+        // Fetch all rows as an associative array
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
 
     public function login($username, $password)
     {
@@ -38,11 +61,24 @@ class Admins extends BaseModel
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($user) {
             $role = $user['role'];
-            return ['user' => $user, 'role' => $role];
+            return ['user' => $user, 'role' => $role, 'is_verified' => $user["is_verified"]];
         }
 
         return null;
     }
+
+    public function isUserUnique($username, $email)
+    {
+        $q = "SELECT COUNT(*) FROM {$this->table} WHERE username = :username AND email = :email";
+        $stmt = $this->conn->prepare($q);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+
+
 
     /**
      * Get the value of id
@@ -231,7 +267,7 @@ class Admins extends BaseModel
 
     /**
      * Get the value of is_archived
-     */ 
+     */
     public function getIs_archived()
     {
         return $this->is_archived;
@@ -241,10 +277,50 @@ class Admins extends BaseModel
      * Set the value of is_archived
      *
      * @return  self
-     */ 
+     */
     public function setIs_archived($is_archived)
     {
         $this->is_archived = $is_archived;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of email
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set the value of email
+     *
+     * @return  self
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of is_verified
+     */
+    public function getIs_verified()
+    {
+        return $this->is_verified;
+    }
+
+    /**
+     * Set the value of is_verified
+     *
+     * @return  self
+     */
+    public function setIs_verified($is_verified)
+    {
+        $this->is_verified = $is_verified;
 
         return $this;
     }

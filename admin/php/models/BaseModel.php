@@ -76,14 +76,14 @@ class BaseModel
     public function getAll()
     {
         // $columns = $this->columns != null ? $this->format_columns() : '*';
-        $sql = "SELECT * FROM {$this->table}";
+        $sql = "SELECT * FROM {$this->table} ORDER BY created_at DESC;";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getAllWhere($conditions = [])
+    public function getAllWhere($conditions = [], $orderBy = null)
     {
         $sql = "SELECT * FROM {$this->table}";
         $values = [];
@@ -100,11 +100,16 @@ class BaseModel
             $sql .= implode(" AND ", $conditionsArr);
         }
 
+        if ($orderBy) {
+            $sql .= " ORDER BY $orderBy";
+        }
+
         $stmt = $this->conn->prepare($sql);
         $stmt->execute($values);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
 
     // Get all records
     public function where()

@@ -150,8 +150,8 @@ main.main-container {
 }
 
 .qrcode-container>img {
-  height: 50%;
-  width: 50%;
+  height: 25%;
+  width: 25%;
 }
 
 /* CSS for the download button */
@@ -168,6 +168,19 @@ main.main-container {
 
 .download-button:hover {
   background-color: #45a049;
+}
+
+#reader {
+  width: 50%;
+  /* Adjust the width as needed */
+  height: 50%;
+  /* Adjust the height as needed */
+  margin: auto;
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 

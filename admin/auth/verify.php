@@ -5,42 +5,57 @@ include_once("../php/config/Database.php");
 
 $database = new Database();
 $db = $database->connect();
-// Check if the user is already logged in, if yes, redirect to the dashboard
-if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
-    header('Location: ../dashboard');
-    exit();
-}
-
 // Check if the login form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the username and password from the form
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $adminObj = new Admins($db);
+    $valid = array();
 
-    // Perform your authentication logic here (e.g., check credentials against database)
-    $userObj = new Admins($db);
-    $result = $userObj->login($username, $password);
+    $_SESSION["errors"] = array();
 
-    if ($result) {
-        // Assuming authentication is successful, set session variables
-        $_SESSION['admin_logged_in'] = true;
-        $_SESSION['user'] = $result["user"];
-        $_SESSION['role'] = $result["role"];
+    $code = $_POST['code'] ?? "";
 
+    $errors = array();
+    if (empty($code)) {
+        $valid[0] = false;
+        array_push($_SESSION["errors"], "Verification is empty.");
+    } else $valid[0] = true;
+
+    if ($_SESSION["verification_code"]["code"] == $code) {
+        $valid[1] = false;
+        array_push($_SESSION["errors"], "Verification is doesn't match.");
+    } else $valid[1] = true;
+
+    if (!in_array(false, $valid)) {
+        unset($_SESSION["verification_code"]);
         // Redirect to the dashboard
-        header('Location: ../dashboard');
+        header('Location: ../admins');
         exit();
-    } else {
-        // Authentication failed, display an error message or redirect to an error page
-        echo "Invalid username or password.";
     }
 }
+
+// if(!isset($_SESSION["verification_code"])){
+
+// }
+
+function generateVerificationToken($length = 32)
+{
+    $verificationCode = rand(100000, 999999);
+
+    // Set the verification code in a session with an expiration time
+    $_SESSION['verification_code'] = [
+        'code' => $verificationCode,
+        'expiry_time' => time() + (15 * 60) // 15 minutes expiration
+    ];
+
+    return $verificationCode;
+}
+
 ?>
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Login</title>
+    <title>Verify Account</title>
     <style>
         body {
             background-color: #f2f2f2;
@@ -106,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="container">
         <div class="login-form">
-            <h1>Admin Login</h1>
+            <h1>Verify Account</h1>
             <?php
             if (isset($_SESSION["errors"])) {
                 echo "<ul>";
@@ -120,17 +135,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             ?>
             <form method="POST" action="">
-                <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" required>
+                <div>
+                    General Instructions:
+                    <ul style="font-size: small;">
+                        <li>Enter the 6-digit code we sent to your email.</li>
+                        <li>Check your email for the verification code and enter it below.</li>
+                        <li>Please enter the code you received in your email.</li>
+                    </ul>
                 </div>
                 <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
+                    <label for="code">6 Digit Code</label>
+                    <input type="number" id="code" name="code" required>
                 </div>
-                <div class="form-group">
-                    <button type="submit">Login</button>
-                </div>
+                <button type="submit">Submit</button>
             </form>
         </div>
     </div>

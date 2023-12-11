@@ -6,6 +6,56 @@ class Blotters extends BaseModel
     protected $id, $complainant_id, $respondent_name, $respondent_address, $incident_location,
         $incident_details, $incident_type, $blotter_status, $investigating_officer, $remarks, $is_archived, $created_at, $updated_at, $columns;
 
+    public function blotter_statistics($num_interval, $interval_indicator)
+    {
+
+        $interval = (isset($num_interval) && $num_interval !== "null") && (isset($interval_indicator) && $interval_indicator !== "null") ? "{$num_interval} {$interval_indicator}" : "1 YEAR";
+
+        $q = "CREATE TEMPORARY TABLE Numbers (n INT);";
+        $stmt = $this->conn->prepare($q);
+        $stmt->execute();
+
+        $q = "INSERT INTO Numbers VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9), (10), (11), (12);";
+        $stmt = $this->conn->prepare($q);
+        $stmt->execute();
+
+        $q = "SELECT
+            DATE_FORMAT(DATE_ADD('2023-01-01', INTERVAL n MONTH), '%M') AS date,
+            IFNULL(COUNT(blotter_records.id), 0) AS count
+        FROM Numbers
+        LEFT JOIN blotter_records
+            ON MONTH(DATE_ADD('2023-01-01', INTERVAL n MONTH)) = MONTH(blotter_records.created_at)
+            AND blotter_records.created_at >= DATE_SUB(CURDATE(), INTERVAL $interval)
+            AND blotter_records.created_at < CURDATE()
+        GROUP BY n
+        ORDER BY n;";
+        $stmt = $this->conn->prepare($q);
+        $stmt->execute();
+        $data = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) array_push($data, $row);
+        return $data;
+    }
+
+    public function search($term, $archived)
+    {
+        $q = "SELECT * FROM `{$this->table}` 
+            WHERE (id LIKE :term OR complainant_id LIKE :term OR respondent_name LIKE :term OR respondent_address LIKE :term OR incident_location LIKE :term
+            OR incident_details LIKE :term OR incident_type LIKE :term OR blotter_status LIKE :term OR investigating_officer LIKE :term OR remarks LIKE :term) 
+            AND is_archived = :archived";
+        $stmt = $this->conn->prepare($q);
+        $term = '%' . $term . '%';  // Add wildcards for LIKE operator
+        $stmt->bindValue(':term', $term);
+        $stmt->bindValue(':archived', $archived);
+
+        $stmt->execute();
+        $data = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            array_push($data, $row);
+        }
+        return $data;
+    }
+
+
     public function save()
     {
         $data = [

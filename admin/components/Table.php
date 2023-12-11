@@ -19,6 +19,8 @@ class Table
     public function build_header()
     {
         $header = "";
+        if (empty($this->tbl)) return;
+
         $keys = array_keys($this->tbl[0]);
         foreach ($keys as $index => $th) {
             $newTh = str_replace("_", " ", $th);
@@ -33,14 +35,21 @@ class Table
     public function build_rows()
     {
         $rows = "";
+        if (empty($this->tbl)) return;
+
         foreach ($this->tbl as $key => $row) {
             if (gettype($row) != "array") break;
             $rows .= "<tr>";
             $id = 0;
             $count = 0;
+
             foreach ($row as $subKey => $subRow) {
+                
                 $attributes = isset($this->columnAttributes[$count]) ? $this->columnAttributes[$count] : ''; // Set the attributes based on the array value
-                $rows .= "<td $attributes>$subRow</td>";
+                if (str_contains($subRow, "/assets/")) {
+                    $imgLink = substr($subRow, 6);
+                    $rows .= "<td><a href='$imgLink' target='_blank'>View QR Code</a></td>";
+                } else $rows .= "<td $attributes>$subRow</td>";
                 if ($subKey === "id") $id = $subRow;
                 $count++;
             }
@@ -71,7 +80,7 @@ class Table
     {
         $this->build_header();
         $this->build_rows();
-        return <<<TBL
+        return !empty($this->tbl) ? <<<TBL
             <table class="tbl" {$this->get_formatted_id()} form-update-action={$this->updateAction} form-add-action="{$this->addAction}">
                 <thead>
                     {$this->getHeader()}
@@ -80,7 +89,9 @@ class Table
                     {$this->getContent()}
                 </tbody>
             </table>
-            TBL;
+            TBL : <<<CONTENT
+            <h1>No data.</h1>
+            CONTENT;
     }
 
     public function setColumnType($columnIndex, $columnType)

@@ -2,8 +2,8 @@
 class Blotter
 {
     private $table = 'blotter_records';
-    private $id, $respondent_name, $complainant_id, $respondent_address, $incident_location,
-        $incident_details, $incident_type, $blotter_status, $investigating_officer, $remarks, $is_archived;
+    private $id, $respondent_name, $complainant_id, $complainant_name, $respondent_address, $incident_location,
+        $incident_details, $incident_type, $blotter_status, $investigating_officer, $remarks, $qrCode, $is_archived;
     private $conn;
 
 
@@ -25,15 +25,17 @@ class Blotter
 
     public function save()
     {
-        $query = "INSERT INTO {$this->table} (complainant_id, respondent_name, 
+        $query = "INSERT INTO {$this->table} (complainant_id, complainant_name, respondent_name, 
         respondent_address, incident_location, 
-        incident_details, incident_type, blotter_status, investigating_officer, remarks) 
-					VALUES (:complainant_id, :respondent_name, 
+        incident_details, incident_type, blotter_status, investigating_officer, remarks, qrcode) 
+					VALUES (:complainant_id, :complainant_name, :respondent_name, 
                     :respondent_address, :incident_location, :incident_details, :incident_type,
-                    :blotter_status, :investigating_officer, :remarks)";
+                    :blotter_status, :investigating_officer, :remarks, :qrcode)";
         $stmt = $this->conn->prepare($query);
 
+
         $stmt->bindParam(":complainant_id", $this->complainant_id);
+        $stmt->bindParam(":complainant_name", $this->complainant_name);
         $stmt->bindParam(":respondent_name", $this->respondent_name);
         $stmt->bindParam(":respondent_address", $this->respondent_address);
         $stmt->bindParam(":incident_location", $this->incident_location);
@@ -42,8 +44,7 @@ class Blotter
         $stmt->bindParam(":blotter_status",  $this->blotter_status);
         $stmt->bindParam(":investigating_officer",  $this->investigating_officer);
         $stmt->bindParam(":remarks",  $this->remarks);
-
-
+        $stmt->bindParam(":qrcode",  $this->qrCode);
         $stmt->execute();
         return $stmt;
     }
@@ -249,23 +250,63 @@ class Blotter
         return $this;
     }
 
-        /**
-         * Get the value of is_archived
-         */ 
-        public function getIs_archived()
-        {
-                return $this->is_archived;
-        }
+    /**
+     * Get the value of is_archived
+     */
+    public function getIs_archived()
+    {
+        return $this->is_archived;
+    }
 
-        /**
-         * Set the value of is_archived
-         *
-         * @return  self
-         */ 
-        public function setIs_archived($is_archived)
-        {
-                $this->is_archived = $is_archived;
+    /**
+     * Set the value of is_archived
+     *
+     * @return  self
+     */
+    public function setIs_archived($is_archived)
+    {
+        $this->is_archived = $is_archived;
 
-                return $this;
-        }
+        return $this;
+    }
+
+    /**
+     * Get the value of qrCode
+     */
+    public function getQrCode()
+    {
+        return $this->qrCode;
+    }
+
+    /**
+     * Set the value of qrCode
+     *
+     * @return  self
+     */
+    public function setQrCode($qrCode)
+    {
+        $this->qrCode = $qrCode;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of complainant_name
+     */
+    public function getComplainant_name()
+    {
+        return $this->complainant_name;
+    }
+
+    /**
+     * Set the value of complainant_name
+     *
+     * @return  self
+     */
+    public function setComplainant_name($complainant_name)
+    {
+        $this->complainant_name = $complainant_name;
+
+        return $this;
+    }
 }

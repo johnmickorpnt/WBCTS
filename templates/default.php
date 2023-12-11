@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="<?= asset("css/headerstyle.css") ?>">
     <link rel="stylesheet" href="<?= asset("css/style.css") ?>">
     <script src="https://kit.fontawesome.com/fbc9e418a7.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <style>
         @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
 

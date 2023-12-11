@@ -1,5 +1,6 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
+if($_SESSION["role"] == "2") header("Location: access-denied");
 
 if (!isset($_SESSION['user'])) {
     // Redirect to the login page
@@ -21,6 +22,10 @@ $db = $database->connect();
 $blotterObj = new Blotters($db);
 $blotterObj->setColumns(["respondent_name", "incident_location", "incident_type", "blotter_status"]);
 $blotters = $blotterObj->getAllWhere(["is_archived" => 1]);
+
+if (isset($_GET["search"]))
+	$blotters = $blotterObj->search($_GET["search"], 1);
+$searchTerm = isset($_GET["search"]) ? $_GET["search"] : "";
 
 $blottersTable = new Table($blotters);
 $blottersTable->setHasActions(false);
@@ -49,12 +54,12 @@ $content = <<<CONTENT
 	<section class="dashboard-section">
 		<h4>Latest Blotters</h4>
         <div class="row-actions">
-            <div class="search-bar">
-                <input type="text" id="search-input" placeholder="Search...">
+            <form class="search-bar" method="GET" action="#">
+                <input type="text" id="search-input" name="search" placeholder="Search..." value={$searchTerm}>
                 <button id="search-button">
                     <i class="fas fa-search"></i>
                 </button>
-            </div>
+            </form>
             <button class="table-action-btn add-button"style="margin-left:auto" data-table="blotters_table">
                 <i class="fa-solid fa-plus"></i> Add
             </button>

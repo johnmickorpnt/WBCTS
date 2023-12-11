@@ -28,6 +28,24 @@ class User extends BaseModel
         }
     }
 
+    public function search($term, $archived)
+    {
+        $q = "SELECT * FROM `{$this->table}` 
+                        WHERE (id LIKE :term OR firstname LIKE :term OR lastname LIKE :term OR email LIKE :term OR address LIKE :term) 
+                        AND is_archived = :archived";
+        $stmt = $this->conn->prepare($q);
+        $term = '%' . $term . '%';  // Add wildcards for LIKE operator
+        $stmt->bindValue(':term', $term);
+        $stmt->bindValue(':archived', $archived);
+
+        $stmt->execute();
+        $data = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            array_push($data, $row);
+        }
+        return $data;
+    }
+
     public function login($username, $password)
     {
         $q = "SELECT * FROM {$this->table} WHERE username = '{$username}' AND password = '{$password}'";

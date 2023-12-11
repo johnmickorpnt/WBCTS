@@ -18,10 +18,41 @@ $qrCodeImageData = ob_get_clean();
 $data = base64_encode($qrCodeImageData);
 $content = <<<CONTENT
     <div class="qrcode-container">
-        <img src="data:image/png;base64,{$data}" alt="QR Code">
+        <img id="myImage" src="data:image/png;base64,{$data}" alt="QR Code">
         <p>Keep a copy of this generated QR Code for easy tracking</p>
-        <a href="php/functions/download.php?data={$data}" class="download-button">Download QR Code</a>
+        <a onclick="downloadQRCode()" class="download-button">Download QR Code</a>
     </div>
+    <script>
+        
+
+        function downloadQRCode() {
+            // Create a blob from the base64-encoded data
+            const blob = new Blob([base64ToArrayBuffer('$data')], {
+                type: 'image/png'
+            });
+
+            // Create a download link
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'qrcode.png';
+
+            // Append the link to the document and trigger the download
+            document.body.appendChild(link);
+            link.click();
+
+            // Remove the link from the document
+            document.body.removeChild(link);
+        }
+
+        function base64ToArrayBuffer(base64) {
+            const binaryString = window.atob(base64);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+    </script>
 CONTENT;
 ?>
 

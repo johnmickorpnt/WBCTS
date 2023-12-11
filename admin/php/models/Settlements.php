@@ -28,6 +28,25 @@ class Settlements extends BaseModel
             $this->insert($data);
         }
     }
+    public function search($term, $archived)
+    {
+        $q = "SELECT * FROM `{$this->table}` 
+                        WHERE (id LIKE :term OR blotter_id LIKE :term OR resolution LIKE :term OR settlement_details LIKE :term OR settled_by LIKE :term
+                        OR remarks LIKE :term OR date_settled LIKE :term) 
+                        AND is_archived = :archived";
+        $stmt = $this->conn->prepare($q);
+        $term = '%' . $term . '%';  // Add wildcards for LIKE operator
+        $stmt->bindValue(':term', $term);
+        $stmt->bindValue(':archived', $archived);
+
+        $stmt->execute();
+        $data = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            array_push($data, $row);
+        }
+        return $data;
+    }
+
     /**
      * Get the value of updated_at
      */

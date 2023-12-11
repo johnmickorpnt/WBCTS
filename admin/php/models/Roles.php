@@ -7,6 +7,23 @@ class Roles extends BaseModel
         protected $id, $role, $permission_create, $permission_read,
                 $permission_write, $permission_delete, $is_archived, $created_at, $updated_at, $columns;
 
+        public function search($term, $archived)
+        {
+                $q = "SELECT * FROM `{$this->table}` 
+                        WHERE (id LIKE :term OR lastname LIKE :term OR email LIKE :term OR contact_number LIKE :term OR address LIKE :term) 
+                        AND archived = :archived";
+                $stmt = $this->conn->prepare($q);
+                $term = '%' . $term . '%';  // Add wildcards for LIKE operator
+                $stmt->bindValue(':term', $term);
+                $stmt->bindValue(':archived', $archived);
+
+                $stmt->execute();
+                $data = array();
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        array_push($data, $row);
+                }
+                return $data;
+        }
 
         /**
          * Get the value of id
