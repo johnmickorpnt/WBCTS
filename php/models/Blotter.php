@@ -23,6 +23,16 @@ class Blotter
         return $stmt;
     }
 
+    public function readWithUser($userId)
+    {
+        $query = "SELECT * FROM {$this->table} WHERE complainant_id = :complainant_id;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":complainant_id", $userId);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
     public function save()
     {
         $query = "INSERT INTO {$this->table} (complainant_id, complainant_name, respondent_name, 

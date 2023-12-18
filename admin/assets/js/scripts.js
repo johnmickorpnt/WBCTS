@@ -421,3 +421,28 @@ function delete_row(id, table) {
             alert(error);
         });
 }
+
+function archive_row(id, table) {
+    var params = new URLSearchParams();
+    params.append("id", id);
+    params.append("table", table);
+
+    let conf = confirm("Are you sure to archive this row?");
+
+    if (!conf) return;
+    fetch('php/functions/archive.php', {
+        method: 'POST',
+        body: params,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+        .then(res => res.json())
+        .finally((data) => {
+            location.reload();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert(error);
+        });
+}

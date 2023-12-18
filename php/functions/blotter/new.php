@@ -74,11 +74,6 @@ if (empty($incident_type)) {
     array_push($_SESSION["errors"], "Incident type missing");
 } else $valid[5] = true;
 
-if (empty($remarks)) {
-    $valid[6] = false;
-    array_push($_SESSION["errors"], "Remarks is missing.");
-} else $valid[6] = true;
-
 if (empty($complainant_name)) {
     $valid[7] = false;
     array_push($_SESSION["errors"], "Complainant name is missing.");
@@ -98,7 +93,7 @@ $blotter->setRespondent_address($respondent_address);
 $blotter->setIncident_location($incident_location);
 $blotter->setIncident_details($incident_details);
 $blotter->setIncident_type($incident_type);
-$blotter->setRemarks($remarks);
+// $blotter->setRemarks($remarks);
 $blotter->setQrCode($outputFile);
 $blotter->setIs_archived(false);
 $blotter->setComplainant_name($complainant_name);

@@ -1,6 +1,6 @@
 <header>
 	<a href="#" class="logo">
-		<img src="<?= img("wbctsLogo.png")?>">
+		<img src="<?= img("sanroq.png")?>">
 	</a>
 	<input type="checkbox" id="menu-bar">
 	<label for="menu-bar">Menu</label>
@@ -11,7 +11,6 @@
 			<li><a href="blotter-records">Blotter Records</a>
 				<ul>
 					<li><a href="new-blotter">New Blotter</li></a>
-					<li><a href="new-blotter">New Case</li></a>
 					<li><a href="blotter-records">View Records</li></a>
 				</ul>
 			</li>

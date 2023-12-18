@@ -15,6 +15,7 @@ if (isset($_SESSION["errors"])) {
 
 $content = <<<CONTENT
   <center>
+		<a href="../index"><img src="../assets/images/sanroq.png"></a>
     <h1>REGISTRATION</h1>
     <p>Please fill up the form to have an account</p>
   </center>

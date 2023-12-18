@@ -33,10 +33,7 @@ $content = <<<CONTENT
         <label for="incident_location"><b>Incident Location:</b></label><br>
         <textarea type="text" placeholder="Enter the Location of the Incident" name="incident_location" id="incident_location" required style="width:100%"></textarea>
     </div>
-    <div class="field">
-        <label for="incident_details"><b>Incident Details:</b></label><br>
-        <textarea type="text" placeholder="Enter Details of the Details" name="incident_details" id="incident_details" required style="width:100%"></textarea>
-    </div>
+    
     
     <div class="field" style="display: flex; flex-direction: column;">
         <label for="incident_type">Incident Type:</label>
@@ -48,11 +45,11 @@ $content = <<<CONTENT
             <option value="other">Other</option>
         </select>
     </div>
-    <input type="hidden" value="{$_SESSION['id']}" id="complainant_id" name="complainant_id">
     <div class="field">
-        <label for="remarks">Remarks:</label>
-        <input type="text" id="remarks" name="remarks" placeholder="Enter Remarks" required>
+        <label for="incident_details"><b>Statement:</b></label><br>
+        <textarea type="text" placeholder="Enter the complainant's statement" name="incident_details" id="incident_details" required style="width:100%"></textarea>
     </div>
+    <input type="hidden" value="{$_SESSION['id']}" id="complainant_id" name="complainant_id">
     {$errors}
     <hr>
     <p>NOTE: Please make sure that the information you'll enter is accurate and true. Failure to do so may have your submitted blotter to be declined.</p>

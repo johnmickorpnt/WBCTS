@@ -43,7 +43,7 @@ $blottersTable->setColumnAttributes("14", "style='display:none'");
 $blottersTable->setUpdateAction("php/functions/blotters/update.php");
 $blottersTable->setAddAction("php/functions/blotters/create.php");
 $blottersTable->setIsArchiveTable(true);
-
+$blottersTable->setIsArchiveTable(false);
 $newModal = new Modal("modal");
 $newModal->setHeader("Blotter Records");
 $newModal->setContent(<<<CONTENT

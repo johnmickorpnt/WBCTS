@@ -96,7 +96,7 @@ class AuditTrail extends BaseModel
     }
     /**
      * Get the value of created_at
-     */ 
+     */
     public function getCreated_at()
     {
         return $this->created_at;
@@ -106,7 +106,7 @@ class AuditTrail extends BaseModel
      * Set the value of created_at
      *
      * @return  self
-     */ 
+     */
     public function setCreated_at($created_at)
     {
         $this->created_at = $created_at;

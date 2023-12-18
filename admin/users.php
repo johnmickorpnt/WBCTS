@@ -25,7 +25,7 @@ $userObj = new User($db);
 $users = $userObj->getAllWhere(["is_archived" => 0]);
 
 if (isset($_GET["search"]))
-    $blotters = $blotterObj->search($_GET["search"], 0);
+    $users = $userObj->search($_GET["search"], 0);
 $searchTerm = isset($_GET["search"]) ? $_GET["search"] : "";
 
 $userTbl = new Table($users);

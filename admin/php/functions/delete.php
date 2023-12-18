@@ -40,7 +40,7 @@ $auditTrail = new AuditTrail($db);
 // Set the necessary information in the audit trail
 $auditTrail->setUserId($_SESSION['user']['id']);
 $auditTrail->setAction('Deleted a row from the ' . $tbl . ' table'); // Set the action performed
-$auditTrail->setTimestamp(date('Y-m-d H:i:s')); // Set the timestamp
+$auditTrail->setCreated_at(date('Y-m-d H:i:s')); // Set the timestamp
 
 $auditTrail->save(); // Save the audit trail
 
