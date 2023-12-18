@@ -1,9 +1,9 @@
 <?php
 
 class Database{
-    private $username = "root";
-    private $password = "";
-    private $db = "WBCTS";
+    private $username = "id20819870_root";
+    private $password = "Brgysanroqueac123!";
+    private $db = "id20819870_wbcts";
     private $host = "localhost";
     private $conn;
     

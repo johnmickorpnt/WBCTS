@@ -21,20 +21,20 @@ $title = "Blotter Dashboard";
 $database = new Database();
 $db = $database->connect();
 
-$settlement = new Settlements($db);
-$settlements = $settlement->getAll();
+// $settlement = new Settlements($db);
+// $settlements = $settlement->getAll();
 
 $blotterObj = new Blotters($db);
 $blotterObj->setColumns(["id", "respondent_name", "incident_location", "incident_type", "blotter_status"]);
 $blotters = $blotterObj->getAll();
 
-$settlementTable = new Table($settlements);
+// $settlementTable = new Table($settlements);
 $blottersTable = new Table($blotters);
 
-$settlementTable->setHasActions(false);
+// $settlementTable->setHasActions(false);
 $blottersTable->setHasActions(false);
 
-$settlementTable->setTblName("settlements");
+// $settlementTable->setTblName("settlements");
 $blottersTable->setTblName("blotters");
 $blottersTable->setColumnType(2, "select");
 $blottersTable->setColumnAttributes("5", "style='display:none'");
