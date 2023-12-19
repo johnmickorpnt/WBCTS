@@ -35,6 +35,9 @@ $content = <<<CONTENT
 				<button type="onsubmit" />
 				<a href="index.php">LOGIN</a></button>
 			</div>
+		</div>
+		<div class="g-recaptcha" data-sitekey="6LeXsTYpAAAAAOMMjVcAbCq5fxV6D4bGyI3aZV7K"></div>
+
 	</form>
 CONTENT;
 ?>

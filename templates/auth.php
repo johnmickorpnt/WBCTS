@@ -4,6 +4,7 @@
 <head>
     <title><?= $title?></title>
     <link rel="stylesheet" href="<?= asset("css/style.css") ?>">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
         @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
 
