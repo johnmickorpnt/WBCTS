@@ -1,7 +1,6 @@
 <?php
 require("templates/template-functions.php");
 
-
 $title = "Blotter Website";
 $content = <<<CONTENT
 	<div id="reader" width="600px"></div>

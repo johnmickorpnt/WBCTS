@@ -42,6 +42,7 @@
 
 <script>
     var blotterElem = document.getElementById("new_blotter");
+    let verified = <?= $_SESSION["verified"]?>;
     document.addEventListener("DOMContentLoaded", () => {
         let incidentType = document.getElementById("incident_type");
         let specificIncidentType = document.getElementById("specific_incident_type");
@@ -64,6 +65,12 @@
     }
 
     function openNewBlotterDialog() {
+        if(!verified) window.location.href ="auth/needs-verification";
         blotterElem.showModal();
+    }
+
+    function goToBlotters(){
+        if(!verified) window.location.href ="auth/needs-verification";
+        window.location.href ="blotter-records";
     }
 </script>

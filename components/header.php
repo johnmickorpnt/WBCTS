@@ -11,13 +11,13 @@
 			<li><a href="blotter-records">Blotter Records</a>
 				<ul>
 					<li><a href="javascript:void(0)" onclick="openNewBlotterDialog()">New Blotter</li></a>
-					<li><a href="blotter-records">View Records</li></a>
+					<li><a href="javascript:void(0)" onclick="goToBlotters()">View Records</li></a>
 				</ul>
 			</li>
 			<!-- <li><a href="qr-code">QR Code Tracking</a></li> -->
 			<?php
 			echo isset($_SESSION["id"]) ? <<<CONTENT
-				<li><a href="blotter-records">Profile</a>
+				<li><a href="profile">Profile</a>
 					<ul>
 						<li><a href="php/functions/auth/logout">Logout</li></a>
 					</ul>

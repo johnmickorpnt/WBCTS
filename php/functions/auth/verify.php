@@ -6,14 +6,6 @@ require_once "../../config/Database.php";
 require_once "../../models/User.php";
 require_once "../../models/UserVerification.php";
 
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-require '../../PHPMailer/src/Exception.php';
-require '../../PHPMailer/src/PHPMailer.php';
-require '../../PHPMailer/src/SMTP.php';
-
 $valid = array();
 $_SESSION["msg"] = array();
 $_SESSION["errors"] = array();
@@ -33,8 +25,10 @@ $token = $_POST['token'] ?? "";
 
 $result = $userVerification->validate($id, $token);
 
-if($result){
+if ($result) {
+    $userVerficiationDetails = $userVerification->read($id);
+    $userVerficiationDetails = $userVerficiationDetails->fetch(PDO::FETCH_ASSOC);
+
+    $user->verify($userVerficiationDetails["user_id"]);
     header("Location: ../../../auth/user-login");
 }
-
-?>

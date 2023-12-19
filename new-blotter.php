@@ -1,6 +1,7 @@
 <?php
 require("templates/template-functions.php");
 if (!isset($_SESSION["id"])) header("Location: auth/user-login");
+if (!$_SESSION["verified"]) header("Location: auth/needs-verification");
 
 $title = "Report new Blotter";
 $errors = "";

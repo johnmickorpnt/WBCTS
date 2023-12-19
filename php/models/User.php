@@ -3,7 +3,7 @@ class User
 {
     private $table = 'users';
     private $id, $first_name, $last_name, $email,
-        $contact_number, $address, $pass, $is_archived, $created_at, $updated_at;
+        $contact_number, $address, $pass, $verified, $is_archived, $created_at, $updated_at;
     private $conn;
 
 
@@ -61,6 +61,17 @@ class User
         $stmt->execute([$email]);
         $count = $stmt->fetchColumn();
         return $count > 0 ? true : false;
+    }
+
+    public function verify($id)
+    {
+
+        $query = "UPDATE {$this->table} SET verified = '1' WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(":id", $id); // Use the function parameter $id
+        $stmt->execute();
+        return $stmt;
     }
 
     /**
@@ -243,23 +254,43 @@ class User
         return $this;
     }
 
-        /**
-         * Get the value of is_archived
-         */ 
-        public function getIs_archived()
-        {
-                return $this->is_archived;
-        }
+    /**
+     * Get the value of is_archived
+     */
+    public function getIs_archived()
+    {
+        return $this->is_archived;
+    }
 
-        /**
-         * Set the value of is_archived
-         *
-         * @return  self
-         */ 
-        public function setIs_archived($is_archived)
-        {
-                $this->is_archived = $is_archived;
+    /**
+     * Set the value of is_archived
+     *
+     * @return  self
+     */
+    public function setIs_archived($is_archived)
+    {
+        $this->is_archived = $is_archived;
 
-                return $this;
-        }
+        return $this;
+    }
+
+    /**
+     * Get the value of verified
+     */
+    public function getVerified()
+    {
+        return $this->verified;
+    }
+
+    /**
+     * Set the value of verified
+     *
+     * @return  self
+     */
+    public function setVerified($verified)
+    {
+        $this->verified = $verified;
+
+        return $this;
+    }
 }

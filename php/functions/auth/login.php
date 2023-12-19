@@ -2,6 +2,8 @@
 session_start();
 require_once "../../config/Database.php";
 require_once "../../models/User.php";
+require_once "../../models/UserVerification.php";
+
 
 $valid = array();
 $_SESSION["msg"] = array();
@@ -12,6 +14,8 @@ $response = array();
 $database = new Database();
 $db = $database->connect();
 $user = new User($db);
+$userVerification = new UserVerification($db);
+
 $email = "";
 $pass = "";
 
@@ -36,6 +40,7 @@ if (!isset($_POST['email']) || !isset($_POST['pass'])) {
     if ($user && password_verify($pass, $user["password"])) {
         // Password is correct
         $_SESSION["id"] = $user["id"];
+        $_SESSION["verified"] = $user["verified"];
         header("Location: /index.php");
         exit();
     } else {
