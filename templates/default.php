@@ -30,6 +30,7 @@
 </head>
 
 <body>
+    <?= component("new-blotter.php") ?>
     <?= component("header.php") ?>
     <main class="main-container" <?= isset($containerStyles) ? "style='{$containerStyles}'" : "" ?>>
         <?= $content ? $content : "" ?>
@@ -38,3 +39,31 @@
 </body>
 
 </html>
+
+<script>
+    var blotterElem = document.getElementById("new_blotter");
+    document.addEventListener("DOMContentLoaded", () => {
+        let incidentType = document.getElementById("incident_type");
+        let specificIncidentType = document.getElementById("specific_incident_type");
+        specificIncidentType.style.display = "none";
+        incidentType.addEventListener("change", () => {
+            if (incidentType.value !== "other") {
+                incidentType.setAttribute("name", "incident_type");
+                specificIncidentType.removeAttribute("name");
+                specificIncidentType.style.display = "none";
+            } else {
+                incidentType.removeAttribute("name");
+                specificIncidentType.setAttribute("name", "incident_type");
+                specificIncidentType.style.display = "inline";
+            }
+        });
+    });
+
+    function closeBlotterDialog() {
+        blotterElem.close();
+    }
+
+    function openNewBlotterDialog() {
+        blotterElem.showModal();
+    }
+</script>

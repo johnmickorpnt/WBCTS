@@ -46,6 +46,9 @@ class User
         $stmt->bindParam(":address", $this->address);
         $stmt->bindParam(":pass",  $this->pass);
         $stmt->execute();
+
+        $this->setId($this->conn->lastInsertId());
+
         return $stmt;
 
         // $result = mysqli_query($db, $query);

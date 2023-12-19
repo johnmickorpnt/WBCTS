@@ -107,7 +107,7 @@ if ($result) {
     $lastInsertedId = $db->lastInsertId();
 
     // Generate QR code using the last inserted ID
-    $qrCodeData = 'Blotter ID: ' . $lastInsertedId;
+    $qrCodeData = $lastInsertedId;
 
     $qrCodeOptions = [
         'errorCorrectionLevel' => 'L',

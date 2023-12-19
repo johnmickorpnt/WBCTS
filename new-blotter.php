@@ -79,7 +79,6 @@ CONTENT;
                 incidentType.removeAttribute("name");
                 specificIncidentType.setAttribute("name", "incident_type");
                 specificIncidentType.style.display = "inline";
-
             }
         });
     });

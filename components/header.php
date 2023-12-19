@@ -10,7 +10,7 @@
 			<li><a href="on-settlements">Settlements</a></li>
 			<li><a href="blotter-records">Blotter Records</a>
 				<ul>
-					<li><a href="new-blotter">New Blotter</li></a>
+					<li><a href="javascript:void(0)" onclick="openNewBlotterDialog()">New Blotter</li></a>
 					<li><a href="blotter-records">View Records</li></a>
 				</ul>
 			</li>
