@@ -2,7 +2,7 @@
 require("templates/template-functions.php");
 if (!isset($_SESSION["id"])) header("Location: auth/user-login");
 
-$title = "Blotter Website";
+$title = "Report new Blotter";
 $errors = "";
 if (isset($_SESSION["errors"])) {
     $errors .= "<ul>";
@@ -34,9 +34,8 @@ $content = <<<CONTENT
         <textarea type="text" placeholder="Enter the Location of the Incident" name="incident_location" id="incident_location" required style="width:100%"></textarea>
     </div>
     
-    
     <div class="field" style="display: flex; flex-direction: column;">
-        <label for="incident_type">Incident Type:</label>
+        <label for="incident_type"><b>Incident Type:</b></label>
         <select id="incident_type" name="incident_type">
             <option value="Theft">Theft</option>
             <option value="Physical Abuse">Physical Abuse</option>
@@ -44,6 +43,10 @@ $content = <<<CONTENT
             <option value="Staffa">Staffa</option>
             <option value="other">Other</option>
         </select>
+    </div>
+    <div class="field">
+        <label for="specific_incident_type"><b>Specify the incident type:</b></label><br>
+        <input type="text" placeholder="Enter Respondent Address" id="specific_incident_type">
     </div>
     <div class="field">
         <label for="incident_details"><b>Statement:</b></label><br>
@@ -62,4 +65,22 @@ $content = <<<CONTENT
 CONTENT;
 ?>
 <?php include 'templates/auth.php'; ?>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        let incidentType = document.getElementById("incident_type");
+        let specificIncidentType = document.getElementById("specific_incident_type");
+        specificIncidentType.style.display = "none";
+        incidentType.addEventListener("change", () => {
+            if (incidentType.value !== "other") {
+                incidentType.setAttribute("name", "incident_type");
+                specificIncidentType.removeAttribute("name");
+                specificIncidentType.style.display = "none";
+            } else {
+                incidentType.removeAttribute("name");
+                specificIncidentType.setAttribute("name", "incident_type");
+                specificIncidentType.style.display = "inline";
 
+            }
+        });
+    });
+</script>
