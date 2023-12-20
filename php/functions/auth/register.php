@@ -94,16 +94,16 @@ $user->setAddress($address);
 $user->setPass(password_hash($pass, PASSWORD_DEFAULT));
 $user->setIs_archived(false);
 
-$reslit = $user->save();
+$result = $user->save();
 
-if ($reslit) {
+if ($result) {
     $userVerification->setUser_id($user->getId());
     $userVerification->setToken($userVerification->generateToken());
 
 
-    $verifyReslits = $userVerification->save();
+    $verifyresults = $userVerification->save();
 
-    if ($verifyReslits) {
+    if ($verifyresults) {
         $mail = new PHPMailer(true);
         $mail->isSMTP(); // Set mailer to use SMTP
         $mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers

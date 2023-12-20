@@ -1,11 +1,14 @@
 <?php
 require("../templates/template-functions.php");
+if (isset($_SESSION["verified"])) 
+    if($_SESSION["verified"]) header("Location: ../index");
 
 
-$title = "Verify";
+$title = "Needs Verification";
 
 
 $content = <<<CONTENT
+    {$_SESSION['verified']}
 	<center>
 		<a href="../index"><img src="../assets/images/sanroq.png"></a>
 		<h1>Verification Needed</h1>
@@ -40,15 +43,17 @@ $content = <<<CONTENT
             Click on the verification link provided in the email.
             You will be redirected to San Roque Blotter System to confirm your email.
         </div>    
+        <button class="btn" onclick="submitValidation()">Click here to Re-send verification Link</button>
+        <form id="createValidation" method="POST" action="../php/functions/auth/create-verification.php">
+            <input type="hidden" value="{$_SESSION["id"]}" name="user_id">
+        </form>
     </div>
 CONTENT;
 ?>
 <?php include '../templates/auth.php'; ?>
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        var verifyForm = document.getElementById("verifyForm");
-        setTimeout(function() {
-            verifyForm.submit();
-        }, 3000);
-    });
+    function submitValidation(){
+        let form = document.getElementById("createValidation");
+        form.submit();
+    }
 </script>

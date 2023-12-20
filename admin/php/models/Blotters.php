@@ -55,6 +55,14 @@ class Blotters extends BaseModel
         return $data;
     }
 
+    public function assignOfficer($id, $officerId){
+        $q = "UPDATE {$this->table} SET investigating_officer = :officerId WHERE id = :id";
+        $stmt = $this->conn->prepare($q);
+        $stmt->bindValue(':officerId', $officerId);
+        $stmt->bindValue(':id', $id);
+        $result = $stmt->execute();
+        return $result;
+    }
 
     public function save()
     {

@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 if (session_status() === PHP_SESSION_NONE) session_start();
 include_once("../php/models/Admins.php");
 include_once("../php/config/Database.php");
@@ -32,10 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 }
-
-// if(!isset($_SESSION["verification_code"])){
-
-// }
 
 function generateVerificationToken($length = 32)
 {

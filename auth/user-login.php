@@ -1,5 +1,6 @@
 <?php
 require("../templates/template-functions.php");
+if (isset($_SESSION["id"])) header("Location: ../index");
 
 
 $title = "Login";

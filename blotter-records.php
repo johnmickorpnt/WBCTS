@@ -19,16 +19,20 @@ foreach ($data as $row) {
 	$rows .= <<<ROW
 		<tr>
 			<td>{$row["respondent_name"]}</td>
-			<td>{$row["incident_details"]}</td>
 			<td>{$row["incident_type"]}</td>
-			<td>{$row["blotter_status"]}</td>
-			<td>{$row["remarks"]}</td>
+			<td>
+				<a href="{$row["qrcode"]}" target="_blank">
+					View QR Code
+				</a>
+			</td>
+			<td>{$row["created_at"]}</td>
+
 		</tr>
 	ROW;
 }
 
 
-$containerStyles = "margin-top: 12rem; padding:3rem; height:100%";
+$containerStyles = "margin-top: 3rem; padding:3rem; height:100%";
 $title = "Your Submitted Blotter Records";
 $errors = "";
 if (isset($_SESSION["errors"])) {
@@ -44,10 +48,9 @@ $content = <<<CONTENT
 	<table class="table table-striped" style="width:100%">
 			<thead>
 				<th>Respondent Name</th>
-				<th>Incident Details</th>
 				<th>Incident Type</th>
-				<th>Status</th>
-				<th>Statement</th>
+				<th>QR Code Image</th>
+				<th>Date</th>
 			</thead>
 			<tbody>
 				{$rows}

@@ -64,15 +64,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         array_push($_SESSION["errors"], "Last name is missing.");
     } else $valid[4] = true;
 
-    if ($adminObj->isUserUnique($username, $email) >= 1) {
+    if ($adminObj->isUsernameUnique($username) >= 1) {
         $valid[5] = false;
-        array_push($_SESSION["errors"], "Username or Email has already been taken.");
+        array_push($_SESSION["errors"], "Username has already been taken.");
     } else $valid[5] = true;
 
-    if (empty($role)) {
+    if ($adminObj->isEmailUnique($email) >= 1) {
         $valid[6] = false;
-        array_push($_SESSION["errors"], "Please pick the role of the user.");
+        array_push($_SESSION["errors"], "Email has already been taken.");
     } else $valid[6] = true;
+
+
+    if (empty($role)) {
+        $valid[7] = false;
+        array_push($_SESSION["errors"], "Please pick the role of the user.");
+    } else $valid[7] = true;
 
     if (in_array(false, $valid)) {
         http_response_code(422);
@@ -128,7 +134,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         MSG;
         try {
             $mail->send();
-            echo json_encode(["response" => "Email Successfully Sent.", ["status" => true]]);
         } catch (Exception $e) {
             echo "Mailer Error: " . $mail->ErrorInfo;
         }

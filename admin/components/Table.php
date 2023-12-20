@@ -32,6 +32,17 @@ class Table
         $this->setHeader($header);
     }
 
+    public function get_investigating_officers()
+    {
+        include_once("php/config/Database.php");
+        include_once("php/models/InvestigatingOfficer.php");
+        $database = new Database();
+        $db = $database->connect();
+
+        $investigatingOfficerObj = new InvestigatingOfficer($db);
+        
+        return $investigatingOfficerObj->getAll();
+    }
     public function build_rows()
     {
         $rows = "";
@@ -44,12 +55,28 @@ class Table
             $count = 0;
 
             foreach ($row as $subKey => $subRow) {
-                
-                $attributes = isset($this->columnAttributes[$count]) ? $this->columnAttributes[$count] : ''; // Set the attributes based on the array value
+                if ($subKey === "investigating_officer") {
+                    $officers = $this->get_investigating_officers();
+                    $options = "<option>NO INVESTIGATING OFFICER</option>";
+                    foreach($officers as $key => $selectRow){
+                        $selectedText = trim($selectRow['id']) === trim($subRow) ? "selected" : "";
+                        $options .= <<<OPTIONS
+                            <option value="{$selectRow["id"]}" {$selectedText}>{$selectRow["lastname"]}, {$selectRow["firstname"]}</option>
+                        OPTIONS;
+                    }
+                    $rows .= <<<CONTENT
+                    <td>
+                        <select class="select_investigating_officer" blotter_id="{$row["id"]}">
+                            {$options}
+                        </select>
+                    </td>
+                    CONTENT;
+                } else $attributes = isset($this->columnAttributes[$count]) ? $this->columnAttributes[$count] : ''; // Set the attributes based on the array value
                 if (str_contains($subRow, "/assets/")) {
                     $imgLink = substr($subRow, 6);
                     $rows .= "<td><a href='$imgLink' target='_blank'>View QR Code</a></td>";
                 } else $rows .= "<td $attributes>$subRow</td>";
+
                 if ($subKey === "id") $id = $subRow;
                 $count++;
             }

@@ -30,12 +30,13 @@ $blottersTable->setHasActions(true);
 $blottersTable->setId("blotters_table");
 $blottersTable->setTblName("blotter_records");
 $blottersTable->setColumnType("1", "select");
+
 $blottersTable->setColumnAttributes(1, "data-table='users'");
+
 
 $blottersTable->setColumnAttributes("6", "style='display:none'");
 $blottersTable->setColumnAttributes("7", "style='display:none'");
 $blottersTable->setColumnAttributes("8", "style='display:none'");
-
 $blottersTable->setColumnAttributes("10", "style='display:none'");
 $blottersTable->setColumnAttributes("12", "style='display:none'");
 $blottersTable->setColumnAttributes("13", "style='display:none'");
@@ -72,3 +73,41 @@ $content = <<<CONTENT
 CONTENT;
 ?>
 <?php include 'templates/default.php'; ?>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        var selects = document.querySelectorAll(".select_investigating_officer");
+        selects.forEach((select) => {
+            select.addEventListener("change", () => {
+                let conf = confirm("Are you sure to assign the investigation officer to this case?");
+                if (!conf) return false;
+
+                var params = new URLSearchParams();
+                params.append("id", select.getAttribute("blotter_id"));
+                params.append("officer", select.value);
+
+                fetch('php/functions/blotters/setOfficer.php', {
+                        method: 'POST',
+                        body: params,
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    })
+                    .then(res => {
+                        // Check if the response status is OK (200)
+                        if (!res.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        // Parse the JSON data from the response
+                        return res.json();
+                    })
+                    .then(data => {
+                        // Call the function to generate the chart with the parsed data
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+        });
+    });
+</script>

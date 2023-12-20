@@ -32,7 +32,8 @@
 <body>
     <?= component("new-blotter.php") ?>
     <?= component("header.php") ?>
-    <main class="main-container" <?= isset($containerStyles) ? "style='{$containerStyles}'" : "" ?>>
+    <main class="<?php echo isset($customContainerClass) ? $customContainerClass : "main-container";?>" 
+    <?= isset($containerStyles) ? "style='{$containerStyles}'" : "" ?>>
         <?= $content ? $content : "" ?>
     </main>
     <?= component("footer.php") ?>

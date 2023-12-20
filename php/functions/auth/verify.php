@@ -30,5 +30,12 @@ if ($result) {
     $userVerficiationDetails = $userVerficiationDetails->fetch(PDO::FETCH_ASSOC);
 
     $user->verify($userVerficiationDetails["user_id"]);
-    header("Location: ../../../auth/user-login");
+
+    if (isset($_SESSION["id"])) {
+        header("Location: ../../../index");
+        $_SESSION["verified"] = 1;
+    }
+    else{
+        header("Location: ../../../auth/user-login");
+    }
 }

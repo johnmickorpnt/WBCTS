@@ -130,7 +130,7 @@ $saveResult = $blotterRecord->save();
 $auditTrail = new AuditTrail($db);
 $auditTrail->setUserId($_SESSION['user']['id']);
 $auditTrail->setAction('Created a new blotter record');
-$auditTrail->setTimestamp(date('Y-m-d H:i:s'));
+$auditTrail->setCreated_at(date('Y-m-d H:i:s'));
 $auditTrail->save();
 
 

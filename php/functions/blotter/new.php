@@ -126,7 +126,7 @@ if ($result) {
     $margin = 4; // Margin around the QR code
 
     // Generate QR code
-    QRcode::png($qrCodeData, $outputFile, $ecc, $size, $margin);
+    QRcode::png("https://blottercasesanroqueac.000webhostapp.com/view-blotters?id=$qrCodeData", $outputFile, $ecc, $size, $margin);
 
     $mail = new PHPMailer(true);
     $mail->isSMTP(); // Set mailer to use SMTP
@@ -180,14 +180,13 @@ if ($result) {
         MSG;
     try {
         $mail->send();
-        echo json_encode(["response" => "Email Successfully Sent.", ["status" => true]]);
+        // echo json_encode(["response" => "Email Successfully Sent.", ["status" => true]]);
+        // http_response_code(200);
+
+        // Redirect to the next page
+        header('Location: ' . $nextPageUrl);
+        exit();
     } catch (Exception $e) {
         echo "Mailer Error: " . $mail->ErrorInfo;
     }
-    http_response_code(200);
-
-
-    // Redirect to the next page
-    header('Location: ' . $nextPageUrl);
-    exit();
 }

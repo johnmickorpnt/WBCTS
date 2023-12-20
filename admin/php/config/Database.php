@@ -3,7 +3,7 @@ class Database{
     private $host = 'localhost';
     private $db = 'wbcts';
     private $username = 'root';
-    private $password = '';
+    private $password = '*E:7"3LU^5Qg';
     private $conn;
 
     public function connect(){

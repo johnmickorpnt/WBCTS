@@ -13,7 +13,7 @@ if (empty($blotterData) || empty($qrCodeOptions)) {
 
 // Capture the QR code image data
 ob_start();
-QRcode::png("http://localhost/wbcts/view-blotters?id=$blotterData", null, QR_ECLEVEL_L, $qrCodeOptions);
+QRcode::png("https://blottercasesanroqueac.000webhostapp.com/view-blotters?id=$blotterData", null, QR_ECLEVEL_L, $qrCodeOptions);
 $qrCodeImageData = ob_get_clean();
 $data = base64_encode($qrCodeImageData);
 $content = <<<CONTENT

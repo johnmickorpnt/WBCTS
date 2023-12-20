@@ -37,11 +37,12 @@ if (!isset($_POST['email']) || !isset($_POST['pass'])) {
     // Fetch the user from the database
     $user = $result->fetch(PDO::FETCH_ASSOC);
     // Verify the password
+    // var_dump($user);
     if ($user && password_verify($pass, $user["password"])) {
         // Password is correct
         $_SESSION["id"] = $user["id"];
         $_SESSION["verified"] = $user["verified"];
-        header("Location: /index.php");
+        header("Location: ../index.php");
         exit();
     } else {
         array_push($_SESSION["errors"], "Invalid Email/Password");

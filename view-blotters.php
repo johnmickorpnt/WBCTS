@@ -8,26 +8,13 @@ $db = $database->connect();
 $blotter = new Blotter($db);
 $data = array();
 
-// if(!isset($_GET["id"])){
-//     header('Location: ' . $_SERVER['HTTP_REFERER']);
-//     exit();
-// }
-
 $result = $blotter->read($_GET["id"]);
 $row = $result->fetch(PDO::FETCH_ASSOC);
-$containerStyles = "margin-top: 5rem; padding:3rem; height:100%; margin-bottom:5rem";
+$containerStyles = "margin-top: 5rem; padding:3rem; height:100%; margin-bottom:5rem;";
 $title = "View Blotter";
 $errors = "";
-if (isset($_SESSION["errors"])) {
-    $errors .= "<ul>";
-    foreach ($_SESSION["errors"] as $error) {
-        $errors .= "<li class='error'>{$error}</li>";
-    }
-    $errors .= "</ul>";
-    unset($_SESSION["errors"]);
-}
 $content = <<<CONTENT
-	<table class="table table-striped" style="width:100%">
+	<table class="table table-striped" style=" width:50vw">
 			<thead>
 				<th>Blotter Information</th>
 				<th>Details</th>
@@ -50,24 +37,15 @@ $content = <<<CONTENT
                     <td>{$row["incident_location"]}</td>
                 </tr>
                 <tr>
-                    <td>Incident Details</td>
-                    <td>{$row["incident_details"]}</td>
-                </tr>
-                <tr>
-                    <td>Status</td>
+                    <td>Statement</td>
                     <td>{$row["incident_details"]}</td>
                 </tr>
                 <tr>
                     <td>Investigating Officer</td>
                     <td>{$row["investigating_officer"]}</td>
-
-                </tr>
-                <tr>
-                    <td>Remarks</td>
-                    <td>{$row["remarks"]}</td>
                 </tr>
 			</tbody>
 		</table>
 CONTENT;
 ?>
-<?php include 'templates/default.php'; ?>
+<?php include 'templates/auth.php'; ?>

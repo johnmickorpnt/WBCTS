@@ -67,17 +67,25 @@ class Admins extends BaseModel
         return null;
     }
 
-    public function isUserUnique($username, $email)
+    public function isUsernameUnique($username)
     {
-        $q = "SELECT COUNT(*) FROM {$this->table} WHERE username = :username AND email = :email";
+        $q = "SELECT COUNT(*) FROM {$this->table} WHERE username = :username";
         $stmt = $this->conn->prepare($q);
         $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':email', $email);
         $stmt->execute();
 
         return $stmt->fetchColumn();
     }
 
+    public function isEmailUnique($email)
+    {
+        $q = "SELECT COUNT(*) FROM {$this->table} WHERE email = :email";
+        $stmt = $this->conn->prepare($q);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
 
 
     /**

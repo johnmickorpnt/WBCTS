@@ -16,7 +16,7 @@ class Blotter
     public function read($id)
     {
         $c = $id != null ? "WHERE id = '{$id}'" : "";
-        $query = "SELECT * FROM {$this->table} {$c};";
+        $query = "SELECT * FROM {$this->table} {$c} ORDER BY created_at DESC;";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
 
@@ -25,7 +25,7 @@ class Blotter
 
     public function readWithUser($userId)
     {
-        $query = "SELECT * FROM {$this->table} WHERE complainant_id = :complainant_id;";
+        $query = "SELECT * FROM {$this->table} WHERE complainant_id = :complainant_id ORDER BY created_at DESC;";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":complainant_id", $userId);
         $stmt->execute();

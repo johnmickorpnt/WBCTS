@@ -7,13 +7,17 @@
 	<nav class="navbar">
 		<ul>
 			<li><a href="index">Home</a></li>
-			<li><a href="on-settlements">Settlements</a></li>
-			<li><a href="blotter-records">Blotter Records</a>
-				<ul>
-					<li><a href="javascript:void(0)" onclick="openNewBlotterDialog()">New Blotter</li></a>
-					<li><a href="javascript:void(0)" onclick="goToBlotters()">View Records</li></a>
-				</ul>
-			</li>
+			<li><a href="about-us">About Us</a></li>
+			<?php echo isset($_SESSION["id"]) ? <<<CONTENT
+				<li>
+					<a href="blotter-records">Blotter Records</a>
+					<ul>
+						<li><a href="javascript:void(0)" onclick="openNewBlotterDialog()">New Blotter</li></a>
+						<li><a href="javascript:void(0)" onclick="goToBlotters()">View Records</li></a>
+					</ul>
+				</li>
+			CONTENT : ""
+			?>
 			<!-- <li><a href="qr-code">QR Code Tracking</a></li> -->
 			<?php
 			echo isset($_SESSION["id"]) ? <<<CONTENT

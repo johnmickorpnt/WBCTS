@@ -4,7 +4,7 @@
 		<a href="#"><i class="fab fa-twitter"></i></a>
 		<a href="#"><i class="fab fa-instagram"></i></a>
 	</div>
-	<div class="footer-left">
+	<div class="footer-left" style="display:flex;flex-direction:column">
 		<p class="footer-links">
 			<a class="link-1" href="index">Home</a>
 			<a href="OnSettlements">About Us</a>
